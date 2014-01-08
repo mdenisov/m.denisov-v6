@@ -314,7 +314,7 @@ app.modules.galleryItem = Backbone.View.extend({
     @doSlider()
     @doNav()
 
-    app.delay(3000, =>
+    @timer = app.delay(3000, =>
       app.$body.addClass('hidden')
 
       @$sidebar
@@ -325,6 +325,7 @@ app.modules.galleryItem = Backbone.View.extend({
     return this
 
   destroy: ->
+    clearTimeout(@timer)
     app.$body.removeClass('hidden')
     PubSub.unattach(@pubSub, this)
 
@@ -485,7 +486,6 @@ app.view = new (Backbone.View.extend({
         e.preventDefault()
       else
         href = app.getDefinedRoute(href);
-        console.log href
         if (href isnt null)
           if (window.chromeless)
             href += ((href.indexOf('?') is -1) ? '?' : '&') + 'chromeless=true';

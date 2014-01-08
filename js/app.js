@@ -276,13 +276,14 @@
       this.slider.nav.$el = this.$el.find('.portfolio__nav');
       this.doSlider();
       this.doNav();
-      app.delay(3000, function() {
+      this.timer = app.delay(3000, function() {
         app.$body.addClass('hidden');
         return _this.$sidebar.removeClass('fadeIn').addClass('fadeOut');
       });
       return this;
     },
     destroy: function() {
+      clearTimeout(this.timer);
       app.$body.removeClass('hidden');
       return PubSub.unattach(this.pubSub, this);
     },
@@ -434,7 +435,6 @@
           return e.preventDefault();
         } else {
           href = app.getDefinedRoute(href);
-          console.log(href);
           if (href !== null) {
             if (window.chromeless) {
               href += ((_ref1 = href.indexOf('?') === -1) != null ? _ref1 : {
