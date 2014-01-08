@@ -2,12 +2,6 @@
 
 	</div>
 
-	<div class="footer">
-		<footer class="footer__container">
-			© Maxim Denisov
-		</footer>
-	</div>
-
 	<div id="welcome" class="welcome">
 		<span class="welcome__logo"></span>
 	</div>

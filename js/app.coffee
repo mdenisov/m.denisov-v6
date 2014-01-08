@@ -107,11 +107,13 @@ app.modules.gallery = Backbone.View.extend({
 
   initialize: ->
     @$el = $(@el)
-    @$items = @$el.find('.portfolio__item')
+
+    app.$body.addClass('grid').addClass('gallery')
 
     @initGrid(true)
 
   destroy: ->
+    app.$body.removeClass('grid').removeClass('gallery')
 
   initGrid: (forceReload) ->
     # Set up number of cols
