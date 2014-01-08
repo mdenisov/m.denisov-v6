@@ -286,7 +286,6 @@
       return this;
     },
     destroy: function() {
-      console.log('destroy');
       clearTimeout(this.timer);
       app.$body.removeClass('hidden').removeClass('fixed');
       return PubSub.unattach(this.pubSub, this);

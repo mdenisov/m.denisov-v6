@@ -329,7 +329,6 @@ app.modules.galleryItem = Backbone.View.extend({
     return this
 
   destroy: ->
-    console.log 'destroy'
     clearTimeout(@timer)
     app.$body.removeClass('hidden').removeClass('fixed')
     PubSub.unattach(@pubSub, this)
