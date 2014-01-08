@@ -1,0 +1,134 @@
+//
+// Variables
+// --------------------------------------------------
+
+
+// Global values
+// --------------------------------------------------
+
+
+// Grays
+// -------------------------
+
+@grayDarker:            #222;
+@grayDark:              #333;
+@gray:                  #555;
+@grayLight:             #999;
+@grayLighter:           #eee;
+
+// Brand colors
+// -------------------------
+
+@brand-primary:         #428bca;
+@brand-success:         #5cb85c;
+@brand-warning:         #f0ad4e;
+@brand-danger:          #d9534f;
+@brand-info:            #5bc0de;
+
+// Scaffolding
+// -------------------------
+
+@body-background:       #000;
+@text-color:            #fff;
+@block-color:			#1f1f1f;
+
+@portfolio-background:	#000;
+
+// Links
+// -------------------------
+
+@link-color:            #898989;
+@link-color-hover:      #FFFFFF;
+//@link-color-hover:      darken(@link-color, 15%);
+
+// Typography
+// -------------------------
+
+@font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-serif:       Georgia, "Times New Roman", Times, serif;
+@font-family-monospace:   Monaco, Menlo, Consolas, "Courier New", monospace;
+@font-family-base:        @font-family-sans-serif;
+@font-family-open-sans:   'Open Sans';
+
+@font-size-base:          13;
+@font-size-large:         (@font-size-base * 1.25); // ~18px
+@font-size-small:         (@font-size-base * 0.85); // ~12px
+@font-size-mini:          (@font-size-base * 0.75); // ~11px
+
+@line-height-base:        18px;
+
+@headings-font-family:    inherit; // empty to use BS default, @font-family-base
+@headings-font-weight:    500;
+
+
+// Component sizing
+// -------------------------
+// Based on 14px font-size and 1.5 line-height
+
+@padding-large:           11px 14px; // 44px
+@padding-small:           2px 10px;  // 26px
+@padding-mini:            0 6px;   // 22px
+
+@border-radius-base:      4px;
+@border-radius-large:     6px;
+@border-radius-small:     3px;
+
+
+// Tables
+// -------------------------
+
+@table-background:                   transparent; // overall background-color
+@table-background-accent:            #f9f9f9; // for striping
+@table-background-hover:             #f5f5f5; // for hover
+
+@table-border:                       #ddd; // table and cell border
+
+
+// Z-index master list
+// -------------------------
+// Used for a bird's eye view of components dependent on the z-axis
+// Try to avoid customizing these :)
+
+@zindex-dropdown:          1000;
+@zindex-popover:           1010;
+@zindex-tooltip:           1030;
+@zindex-header:      	   1030;
+@zindex-modal-background:  1040;
+@zindex-modal:             1050;
+@zindex-welcome:           1100;
+
+
+// Icons font path
+// -------------------------
+@icon-font-path:          "font";
+@sprite-path:          	  "img/sprite.png";
+
+
+// Form states and alerts
+// -------------------------
+
+@state-warning-text:             #c09853;
+@state-warning-background:       #fcf8e3;
+@state-warning-border:           darken(spin(@state-warning-background, -10), 3%);
+
+@state-error-text:               #b94a48;
+@state-error-background:         #f2dede;
+@state-error-border:             darken(spin(@state-error-background, -10), 3%);
+
+@state-success-text:             #468847;
+@state-success-background:       #dff0d8;
+@state-success-border:           darken(spin(@state-success-background, -10), 5%);
+
+@state-info-text:                #3a87ad;
+@state-info-background:          #d9edf7;
+@state-info-border:              darken(spin(@state-info-background, -10), 7%);
+
+
+// Miscellaneous
+// -------------------------
+
+// Hr border color
+@hr-border:                   @grayLighter;
+
+// Horizontal forms & lists
+@component-offset-horizontal: 180px;
