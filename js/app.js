@@ -111,10 +111,12 @@
     padding: 10,
     initialize: function() {
       this.$el = $(this.el);
-      this.$items = this.$el.find('.portfolio__item');
+      app.$body.addClass('grid').addClass('gallery');
       return this.initGrid(true);
     },
-    destroy: function() {},
+    destroy: function() {
+      return app.$body.removeClass('grid').removeClass('gallery');
+    },
     initGrid: function(forceReload) {
       var i, newRow, numCols;
       numCols = this.setCols();
@@ -274,6 +276,7 @@
       this.slider.$el = this.$el.find('.portfolio__slider');
       this.$sidebar = this.$el.find('.portfolio__sidebar');
       this.slider.nav.$el = this.$el.find('.portfolio__nav');
+      app.$body.addClass('fixed');
       this.doSlider();
       this.doNav();
       this.timer = app.delay(3000, function() {
@@ -283,8 +286,9 @@
       return this;
     },
     destroy: function() {
+      console.log('destroy');
       clearTimeout(this.timer);
-      app.$body.removeClass('hidden');
+      app.$body.removeClass('hidden').removeClass('fixed');
       return PubSub.unattach(this.pubSub, this);
     },
     doSlider: function() {
@@ -464,13 +468,13 @@
     revealApp: function() {
       var ex;
       this.moduleName = this.$el.find('#main-content').data('module') || 'text';
-      console.log(this.moduleName);
+      console.log(this.moduleName, app.subView);
       if (app.modules.hasOwnProperty(this.moduleName)) {
         if (app.subView != null) {
           app.$window.off('.' + app.subView.cid);
           app.$document.off('.' + app.subView.cid);
           try {
-            app.subView.destroy(true);
+            app.subView.destroy();
           } catch (_error) {
             ex = _error;
             console.error('View threw an exception on destroy: ', ex.stack || ex.stacktrace || ex.message);

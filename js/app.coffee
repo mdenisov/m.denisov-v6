@@ -313,6 +313,8 @@ app.modules.galleryItem = Backbone.View.extend({
     @$sidebar = @$el.find('.portfolio__sidebar')
     @slider.nav.$el = @$el.find('.portfolio__nav')
 
+    app.$body.addClass('fixed')
+
     @doSlider()
     @doNav()
 
@@ -327,8 +329,9 @@ app.modules.galleryItem = Backbone.View.extend({
     return this
 
   destroy: ->
+    console.log 'destroy'
     clearTimeout(@timer)
-    app.$body.removeClass('hidden')
+    app.$body.removeClass('hidden').removeClass('fixed')
     PubSub.unattach(@pubSub, this)
 
   doSlider: ->
@@ -509,14 +512,14 @@ app.view = new (Backbone.View.extend({
 
   revealApp: ->
     @moduleName = @$el.find('#main-content').data('module') || 'text'
-    console.log @moduleName
+    console.log @moduleName, app.subView
     if app.modules.hasOwnProperty(@moduleName)
       if app.subView?
         app.$window.off '.' + app.subView.cid
         app.$document.off '.' + app.subView.cid
 
         try
-          app.subView.destroy(true)
+          app.subView.destroy()
         catch ex
           console.error('View threw an exception on destroy: ', (ex.stack || ex.stacktrace || ex.message));
           app.subView.$el.remove()
