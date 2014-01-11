@@ -107,12 +107,12 @@ body {
 	z-index: @zindex-header;
 	.transition(opacity .2s);
 
+	&:hover {
+		.opacity(100) !important;
+	}
+
 	.hidden & {
 		.opacity(30);
-
-		&:hover {
-			.opacity(100);
-		}
 	}
 
 	.mousemove & {

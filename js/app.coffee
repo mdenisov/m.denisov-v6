@@ -25,7 +25,7 @@ app =
     app.$document.on 'keydown', (e) ->
       PubSub.trigger('app:keydown', e)
 
-    PubSub.trigger('app:rendered')
+#    PubSub.trigger('app:rendered')
 
     console.log app
 
@@ -431,32 +431,6 @@ app.modules.galleryItem = Backbone.View.extend({
 })
 
 
-# ROUTER
-app.router = new(Backbone.Router.extend({
-  initialize: ->
-
-  routes:
-    '*path': 'parseHash'
-#    '/': 'parseHash'
-#    '/gallery': 'parseHash'
-#    '/gallery/*': 'parseHash'
-#    '/about': 'parseHash'
-
-  parseHash: (hash) ->
-    console.log hash
-
-    ajaxPromise = app.loadHtml(hash)
-    ajaxPromise.done (html) ->
-      PubSub.trigger('app:loaded', html)
-    ajaxPromise.fail (error) ->
-      console.log error
-#    ajaxPromise.always (error) ->
-#      console.log error
-}))
-
-Backbone.history.start({pushState: true, hashChange: false, silent: true})
-
-
 # BASE APP VIEW
 app.view = new (Backbone.View.extend({
   el: 'body'
@@ -479,6 +453,8 @@ app.view = new (Backbone.View.extend({
   triggerRoute: (e) ->
     $targetLink = $(e.target).closest('a')
     href = $.trim($targetLink.attr('href'))
+
+    console.log href
 
     if (!Modernizr.history)
       if (app.getDefinedRoute(href) and window.chromeless)
@@ -525,6 +501,28 @@ app.view = new (Backbone.View.extend({
 
       app.subView = new app.modules[@moduleName]
 }))
+
+
+# ROUTER
+app.router = new(Backbone.Router.extend({
+  initialize: ->
+
+  routes:
+    '*path': 'parseHash'
+
+  parseHash: (hash) ->
+    console.log hash
+
+    ajaxPromise = app.loadHtml(hash)
+    ajaxPromise.done (html) ->
+      PubSub.trigger('app:loaded', html)
+    ajaxPromise.fail (error) ->
+      console.log error
+#    ajaxPromise.always (error) ->
+#      console.log error
+}))
+
+Backbone.history.start({pushState: true})
 
 
 # IMAGE LOADER
