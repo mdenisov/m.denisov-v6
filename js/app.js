@@ -8,5 +8,5 @@ define(function(require, exports, module) {
   PubSub = require("pubsub");
   app = module.exports;
   app.root = "/photosite/";
-  return console.log(module);
+  return console.log(app);
 });

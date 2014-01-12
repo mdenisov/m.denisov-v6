@@ -14,4 +14,4 @@ define (require, exports, module) ->
   #app.root = "/"
   app.root = "/photosite/"
 
-  console.log module
+  console.log app

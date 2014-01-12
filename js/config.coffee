@@ -1,4 +1,5 @@
 require.config(
+  urlArgs: "bust=" +  (new Date()).getTime()
   paths: {
     # Make vendor easier to access.
     "vendor": "vendor",
