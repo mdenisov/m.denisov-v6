@@ -58,7 +58,7 @@ define (require, exports, module) ->
       callback()
     ), time
 
-  
+
   # IMAGE LOADER
   app.loader = new (Backbone.View.extend({
     el: '#loader'
