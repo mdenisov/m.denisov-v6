@@ -64,6 +64,7 @@ define(function(require, exports, module) {
       var $els, imageCount, l, total, _results;
       this.$progress.html('0');
       this.$el.show();
+      console.log(app.view);
       $els = app.view.$el.find('img');
       total = $els.length;
       imageCount = 0;
@@ -89,5 +90,8 @@ define(function(require, exports, module) {
       return this.$el.hide();
     }
   }));
+  $(document).ready(function() {
+    return app.init();
+  });
   return console.log(app);
 });
