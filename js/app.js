@@ -11,6 +11,7 @@ define(function(require, exports, module) {
   app.view = {};
   app.subView = null;
   app.modules = {};
+  app.loader = {};
   app.init = function() {
     app.DEBUG = true;
     app.$window = $(window);
@@ -49,5 +50,44 @@ define(function(require, exports, module) {
       return callback();
     }), time);
   };
+  app.loader = new (Backbone.View.extend({
+    el: '#loader',
+    initialize: function() {
+      this.$el = $(this.el);
+      this.$progress = this.$el.children();
+      this.pubSub = {
+        'app:rendered': this.start
+      };
+      return PubSub.attach(this.pubSub, this);
+    },
+    start: function() {
+      var $els, imageCount, l, total, _results;
+      this.$progress.html('0');
+      this.$el.show();
+      $els = app.view.$el.find('img');
+      total = $els.length;
+      imageCount = 0;
+      l = total;
+      if (l > 0) {
+        _results = [];
+        while (l--) {
+          $($els[l]).on('load', function() {});
+          ++imageCount;
+          this.$progress.html((total / imageCount) * 100);
+          if (total === imageCount) {
+            _results.push(this.done());
+          } else {
+            _results.push(void 0);
+          }
+        }
+        return _results;
+      } else {
+        return this.done();
+      }
+    },
+    done: function() {
+      return this.$el.hide();
+    }
+  }));
   return console.log(app);
 });
