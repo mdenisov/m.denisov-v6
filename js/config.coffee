@@ -4,6 +4,7 @@ require.config(
     # Make vendor easier to access.
     "vendor": "vendor",
     "lib": "lib",
+    "modules": "modules",
 
     # Opt for Lo-Dash Underscore compatibility build over Underscore.
     "underscore": "vendor/bower_components/lodash/dist/lodash.underscore",

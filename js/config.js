@@ -4,6 +4,7 @@ require.config({
   paths: {
     "vendor": "vendor",
     "lib": "lib",
+    "modules": "modules",
     "underscore": "vendor/bower_components/lodash/dist/lodash.underscore",
     "jquery": "vendor/bower_components/jquery/jquery",
     "backbone": "vendor/bower_components/backbone/backbone",
