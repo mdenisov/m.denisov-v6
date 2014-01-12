@@ -8,5 +8,46 @@ define(function(require, exports, module) {
   PubSub = require("pubsub");
   app = module.exports;
   app.root = "/photosite/";
+  app.view = {};
+  app.subView = null;
+  app.modules = {};
+  app.init = function() {
+    app.DEBUG = true;
+    app.$window = $(window);
+    app.$document = $(document);
+    app.$body = $('body');
+    app.$document.on('resize', function(e) {
+      return PubSub.trigger('app:resize', e);
+    });
+    app.$document.on('mousemove', function(e) {
+      return PubSub.trigger('app:mousemove', e);
+    });
+    return app.$document.on('keydown', function(e) {
+      return PubSub.trigger('app:keydown', e);
+    });
+  };
+  app.isValidUrl = function(href) {
+    if (!href) {
+      return false;
+    } else if (href.indexOf('javascript:') !== -1) {
+      return false;
+    } else if (href[0] === '#' && href.length === 1) {
+      return false;
+    } else if (href.indexOf('../') !== -1) {
+      console.error('Attempting to load a relative url, bad code monkey! (' + href + ')');
+      return false;
+    } else if (href[0] !== '/' && href.indexOf('://') === -1) {
+      console.error('Attempting to load a relative url, bad code monkey! (' + href + ')');
+      return false;
+    }
+    return true;
+  };
+  app.getDefinedRoute = function(fragment) {};
+  app.loadHtml = function(href) {};
+  app.delay = function(time, callback) {
+    return setTimeout((function() {
+      return callback();
+    }), time);
+  };
   return console.log(app);
 });
