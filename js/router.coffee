@@ -2,13 +2,13 @@ define (require, exports, module) ->
   "use strict"
 
   # External dependencies.
-  Backbone = require("backbone");
+  Backbone = require("backbone")
 
   # Defining the application router.
   module.exports = Backbone.Router.extend({
     routes:
-      "*": "someRoute"
+      '*path': 'someRoute'
 
-    someRoute: ->
+    someRoute: (path) ->
       console.log "Welcome to your / route."
   })

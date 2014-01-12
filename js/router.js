@@ -5,9 +5,9 @@ define(function(require, exports, module) {
   Backbone = require("backbone");
   return module.exports = Backbone.Router.extend({
     routes: {
-      "*": "someRoute"
+      '*path': 'someRoute'
     },
-    someRoute: function() {
+    someRoute: function(path) {
       return console.log("Welcome to your / route.");
     }
   });
