@@ -70,25 +70,6 @@ define(function(require, exports, module) {
       return null;
     }
   };
-  app.loadHtml = function(href) {
-    if (!href) {
-      return false;
-    }
-    return $.Deferred(function(deferred) {
-      href = app.baseUrl + href;
-      return $.ajax(href, {
-        type: 'GET',
-        dataType: 'html',
-        error: function(jqXHR, textStatus, errorThrown) {
-          console.log("AJAX Error: " + textStatus);
-          return deferred.fail(textStatus);
-        },
-        success: function(data, textStatus, jqXHR) {
-          return deferred.resolve(data);
-        }
-      });
-    }).promise();
-  };
   app.delay = function(time, callback) {
     return setTimeout((function() {
       return callback();

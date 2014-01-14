@@ -3,6 +3,149 @@ define(["app"], function(app) {
   "use strict";
   var Gallery;
   Gallery = app.module();
-  Gallery.View = Backbone.View.extend({});
+  Gallery.View = Backbone.View.extend({
+    el: '.portfolio__list',
+    unit: null,
+    unitSpan: 0,
+    numCols: null,
+    shuffleOn: false,
+    popped: false,
+    setArray: null,
+    padding: 10,
+    initialize: function() {
+      this.$el = $(this.el);
+      app.$body.addClass('grid').addClass('gallery');
+      return this.initGrid(true);
+    },
+    destroy: function() {
+      return app.$body.removeClass('grid').removeClass('gallery');
+    },
+    initGrid: function(forceReload) {
+      var i, newRow, numCols;
+      numCols = this.setCols();
+      if (this.numCols !== numCols || forceReload) {
+        this.numCols = numCols;
+        this.unit = $('.portfolio__item');
+        this.setArray = [];
+        newRow = [];
+        i = this.numCols;
+        while (i--) {
+          newRow[i] = 0;
+        }
+        this.setArray.push(newRow);
+        if (this.numCols >= 3) {
+          return this.layout();
+        } else {
+          return this.clear();
+        }
+      }
+    },
+    clear: function() {},
+    shuffle: function(units) {
+      var i, j, nonShuffled, shuffled, temp;
+      shuffled = units.not(".ignore-shuffle");
+      nonShuffled = units.filter(".ignore-shuffle");
+      shuffled = $.makeArray(shuffled);
+      nonShuffled = $.makeArray(nonShuffled);
+      i = shuffled.length;
+      while (i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = shuffled[i];
+        shuffled[i] = shuffled[j];
+        shuffled[j] = temp;
+      }
+      shuffled = nonShuffled.concat(shuffled);
+      return $(shuffled);
+    },
+    setCols: function() {
+      var itemWidth;
+      itemWidth = 320;
+      return (this.$el.width() / itemWidth) | 0;
+    },
+    layout: function() {
+      var col, colSpan, freeUnits, gridUnit, height, i, key, newRow, placed, row, rowSpan, takenUnits, width, _i, _len, _ref;
+      this.unitSpan = this.$el.innerWidth() / this.numCols;
+      this.unit.css("position", "absolute");
+      this.unit.find(".portfolio__item__block").css({
+        position: "absolute",
+        top: this.padding,
+        left: this.padding,
+        right: this.padding,
+        bottom: this.padding,
+        minHeight: 0
+      });
+      if (this.shuffleOn) {
+        this.unit = this.shuffle(this.unit);
+      }
+      gridUnit = {};
+      _ref = this.unit;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        key = _ref[_i];
+        gridUnit = $(key);
+        rowSpan = parseInt(gridUnit.data("rowspan"), 10);
+        colSpan = parseInt(gridUnit.data("colspan"), 10);
+        placed = false;
+        newRow = [];
+        width = this.unitSpan * colSpan;
+        height = this.unitSpan * rowSpan;
+        gridUnit.css({
+          width: width,
+          height: height
+        });
+        for (row in this.setArray) {
+          freeUnits = 0;
+          takenUnits = 0;
+          for (col in this.setArray[row]) {
+            if (this.setArray[row][col] === 0) {
+              freeUnits++;
+            } else {
+              freeUnits = 0;
+              takenUnits++;
+            }
+            if (freeUnits === colSpan) {
+              gridUnit.css({
+                top: row * this.unitSpan,
+                left: (col - (colSpan - 1)) * this.unitSpan
+              });
+              i = colSpan + (col - (colSpan - 1)) - 1;
+              while (i >= (col - (colSpan - 1))) {
+                this.setArray[row][i] = 1;
+                i--;
+              }
+              if (rowSpan > 1) {
+                newRow = [];
+                i = this.numCols;
+                while (i--) {
+                  newRow[i] = 0;
+                }
+                this.setArray.push(newRow);
+                i = colSpan + (col - (colSpan - 1)) - 1;
+                while (i >= (col - (colSpan - 1))) {
+                  this.setArray[parseInt(row, 10) + 1][i] = 1;
+                  i--;
+                }
+              }
+              placed = true;
+              break;
+            }
+          }
+          if (!placed) {
+            if (this.setArray[row + 1] != null) {
+              newRow = [];
+              i = this.numCols;
+              while (i--) {
+                newRow[i] = 0;
+              }
+              this.setArray.push(newRow);
+            }
+          } else {
+            break;
+          }
+        }
+      }
+      return this.$el.height(this.setArray.length * this.unitSpan);
+    }
+  });
+  console.log(Gallery);
   return Gallery;
 });

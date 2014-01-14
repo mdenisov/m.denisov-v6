@@ -76,24 +76,6 @@ define (require, exports, module) ->
     else
       return null
 
-  app.loadHtml = (href) ->
-    if (!href)
-      return false
-
-    return $.Deferred((deferred) ->
-      href = app.baseUrl + href
-
-      $.ajax href,
-        type: 'GET'
-        dataType: 'html'
-        error: (jqXHR, textStatus, errorThrown) ->
-          console.log "AJAX Error: #{textStatus}"
-          deferred.fail(textStatus)
-        success: (data, textStatus, jqXHR) ->
-#          console.log "Successful AJAX call: #{data}"
-          deferred.resolve(data)
-    ).promise()
-
   app.delay = (time, callback) ->
     setTimeout (->
       callback()
