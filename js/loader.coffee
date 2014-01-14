@@ -1,14 +1,8 @@
-define (require, exports, module) ->
+define(["app", "pubsub"], (app, PubSub) ->
   "use strict"
 
-  # External dependencies.
-  _ = require("underscore")
-  $ = require("jquery")
-  Backbone = require("backbone")
-  PubSub = require("pubsub")
-
   # Defining the application loader view.
-  module.exports = Backbone.View.extend({
+  return Backbone.View.extend({
     el: '#loader'
 
     initialize: ->
@@ -44,3 +38,5 @@ define (require, exports, module) ->
     done: ->
       @$el.hide()
   })
+
+)
