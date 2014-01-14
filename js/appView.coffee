@@ -1,4 +1,4 @@
-define (require, exports, module) ->
+define(["app", "modules/gallery", "modules/galleryItem"], (app, galleryView, galleryItemView) ->
   "use strict"
 
   # External dependencies.
@@ -8,7 +8,7 @@ define (require, exports, module) ->
   PubSub = require("pubsub")
 
   # Defining the application base view.
-  module.exports = Backbone.View.extend({
+  return Backbone.View.extend({
     el: 'body'
     $container: {}
 
@@ -25,6 +25,8 @@ define (require, exports, module) ->
       @$el = $(@el)
       @$container = @$el.find('#main')
       @$welcome = @$el.find('#welcome')
+
+      PubSub.trigger('app:rendered')
 
     triggerRoute: (e) ->
       $targetLink = $(e.target).closest('a')
@@ -46,8 +48,12 @@ define (require, exports, module) ->
             if (window.chromeless)
               href += ((href.indexOf('?') is -1) ? '?' : '&') + 'chromeless=true';
 
-            Backbone.history.navigate(href, {trigger: true});
-            e.preventDefault();
+      console.log href
+
+#      href = '/gallery/'
+
+      Backbone.history.navigate(href, {trigger: true});
+      e.preventDefault();
 
     render: (html) ->
       if (html isnt null)
@@ -77,3 +83,5 @@ define (require, exports, module) ->
 
         app.subView = new app.modules[@moduleName]
   })
+
+)

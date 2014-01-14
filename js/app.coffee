@@ -11,8 +11,13 @@ define (require, exports, module) ->
   app = module.exports
 
   # The root path to run the application through.
-  #app.root = "/"
+  app.testDomain = 'http://localhost/photosite/'
+  app.baseUrl = baseUrl + '/'
+#  app.baseUrl = window.location.protocol + '//' + window.location.host + '/'
   app.root = "/photosite/"
+  app.testRoot = "/photosite/"
+  app.domainRegex = ""
+
   app.view = {}
   app.subView = null
   app.modules = {}
@@ -50,6 +55,26 @@ define (require, exports, module) ->
     return true
 
   app.getDefinedRoute = (fragment) ->
+    if (fragment is '#')
+      return null
+
+    fragment = fragment.replace(@domainRegex, '')
+    if (!fragment.indexOf(@baseUrl))
+      fragment = fragment.substring(@baseUrl.length)
+    else if (!fragment.indexOf(@testDomain))
+      fragment = fragment.substring(@testDomain.length)
+    else if (fragment.indexOf('://') isnt -1)
+      return null
+
+    fragment = Backbone.history.getFragment(fragment)
+    matched = _.any(Backbone.history.handlers, (handler) ->
+      return handler.route.test(fragment)
+    )
+
+    if matched
+      return fragment
+    else
+      return null
 
   app.loadHtml = (href) ->
 
@@ -58,48 +83,7 @@ define (require, exports, module) ->
       callback()
     ), time
 
+  app.module = (additionalProps) ->
+    return _.extend({ View: {} }, additionalProps)
 
-  # IMAGE LOADER
-  app.loader = new (Backbone.View.extend({
-    el: '#loader'
-
-    initialize: ->
-      @$el = $(@el)
-      @$progress = @$el.children()
-
-      @pubSub =
-        'app:rendered': @start
-
-      PubSub.attach(@pubSub, this);
-
-    start: ->
-      @$progress.html('0')
-      @$el.show()
-
-      console.log app.view
-
-      $els = app.view.$el.find('img')
-      total = $els.length
-      imageCount = 0
-      l = total
-
-      if l > 0
-        while l--
-          $($els[l]).on 'load', ->
-          ++imageCount
-
-          @$progress.html((total / imageCount) * 100)
-
-          if total is imageCount
-            @done()
-      else
-        @done()
-
-    done: ->
-      @$el.hide()
-  }))
-
-  $(document).ready ->
-    app.init()
-
-  console.log app
+  return app

@@ -1,13 +1,13 @@
-define (require, exports, module) ->
+define(["app"], (app) ->
   "use strict"
 
-  # External dependencies.
-  _ = require("underscore")
-  $ = require("jquery")
-  Backbone = require("backbone")
-  PubSub = require("pubsub")
+  # Create a new module.
+  Gallery = app.module()
 
-  # Defining the application gallery view.
-  module.exports = Backbone.View.extend({
+  Gallery.View = Backbone.View.extend({
 
   })
+
+  return Gallery
+
+)

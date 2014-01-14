@@ -7,7 +7,11 @@ define(function(require, exports, module) {
   Backbone = require("backbone");
   PubSub = require("pubsub");
   app = module.exports;
+  app.testDomain = 'http://localhost/photosite/';
+  app.baseUrl = baseUrl + '/';
   app.root = "/photosite/";
+  app.testRoot = "/photosite/";
+  app.domainRegex = "";
   app.view = {};
   app.subView = null;
   app.modules = {};
@@ -43,55 +47,39 @@ define(function(require, exports, module) {
     }
     return true;
   };
-  app.getDefinedRoute = function(fragment) {};
+  app.getDefinedRoute = function(fragment) {
+    var matched;
+    if (fragment === '#') {
+      return null;
+    }
+    fragment = fragment.replace(this.domainRegex, '');
+    if (!fragment.indexOf(this.baseUrl)) {
+      fragment = fragment.substring(this.baseUrl.length);
+    } else if (!fragment.indexOf(this.testDomain)) {
+      fragment = fragment.substring(this.testDomain.length);
+    } else if (fragment.indexOf('://') !== -1) {
+      return null;
+    }
+    fragment = Backbone.history.getFragment(fragment);
+    matched = _.any(Backbone.history.handlers, function(handler) {
+      return handler.route.test(fragment);
+    });
+    if (matched) {
+      return fragment;
+    } else {
+      return null;
+    }
+  };
   app.loadHtml = function(href) {};
   app.delay = function(time, callback) {
     return setTimeout((function() {
       return callback();
     }), time);
   };
-  app.loader = new (Backbone.View.extend({
-    el: '#loader',
-    initialize: function() {
-      this.$el = $(this.el);
-      this.$progress = this.$el.children();
-      this.pubSub = {
-        'app:rendered': this.start
-      };
-      return PubSub.attach(this.pubSub, this);
-    },
-    start: function() {
-      var $els, imageCount, l, total, _results;
-      this.$progress.html('0');
-      this.$el.show();
-      console.log(app.view);
-      $els = app.view.$el.find('img');
-      total = $els.length;
-      imageCount = 0;
-      l = total;
-      if (l > 0) {
-        _results = [];
-        while (l--) {
-          $($els[l]).on('load', function() {});
-          ++imageCount;
-          this.$progress.html((total / imageCount) * 100);
-          if (total === imageCount) {
-            _results.push(this.done());
-          } else {
-            _results.push(void 0);
-          }
-        }
-        return _results;
-      } else {
-        return this.done();
-      }
-    },
-    done: function() {
-      return this.$el.hide();
-    }
-  }));
-  $(document).ready(function() {
-    return app.init();
-  });
-  return console.log(app);
+  app.module = function(additionalProps) {
+    return _.extend({
+      View: {}
+    }, additionalProps);
+  };
+  return app;
 });
