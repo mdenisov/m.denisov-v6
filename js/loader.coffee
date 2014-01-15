@@ -24,9 +24,6 @@ define (require, exports, module) ->
       @$progress.html('0')
       @$el.show()
 
-      console.log app.view
-
-#      $els = app.view.$el.find('img')
       $els = app.$body.find('img')
       total = $els.length
       imageCount = 0
@@ -45,5 +42,5 @@ define (require, exports, module) ->
         @done()
 
     done: ->
-      @$el.hide()
+      @$el.fadeOut()
   })

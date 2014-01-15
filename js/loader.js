@@ -20,7 +20,6 @@ define(function(require, exports, module) {
       var $els, imageCount, l, total, _results;
       this.$progress.html('0');
       this.$el.show();
-      console.log(app.view);
       $els = app.$body.find('img');
       total = $els.length;
       imageCount = 0;
@@ -43,7 +42,7 @@ define(function(require, exports, module) {
       }
     },
     done: function() {
-      return this.$el.hide();
+      return this.$el.fadeOut();
     }
   });
 });

@@ -59,12 +59,11 @@ define (require, exports, module) ->
         PubSub.trigger('app:rendered')
 
     onAfterRender: ->
-      @$welcome.hide()
+      @$welcome.fadeOut()
       @revealApp()
 
     revealApp: ->
       @moduleName = @$el.find('#main-content').data('module') || 'page'
-      console.log @moduleName, app.subView
 
       module = require(["modules/" + @moduleName], (module) ->
         if app.subView?

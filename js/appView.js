@@ -64,12 +64,11 @@ define(function(require, exports, module) {
       }
     },
     onAfterRender: function() {
-      this.$welcome.hide();
+      this.$welcome.fadeOut();
       return this.revealApp();
     },
     revealApp: function() {
       this.moduleName = this.$el.find('#main-content').data('module') || 'page';
-      console.log(this.moduleName, app.subView);
       return module = require(["modules/" + this.moduleName], function(module) {
         var ex;
         if (app.subView != null) {
