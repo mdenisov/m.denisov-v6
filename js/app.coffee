@@ -23,12 +23,12 @@ define (require, exports, module) ->
   app.modules = {}
   app.loader = {}
 
-  app.init = ->
-    app.DEBUG = true
-    app.$window = $(window)
-    app.$document = $(document)
-    app.$body = $('body')
+  app.DEBUG = true
+  app.$window = $(window)
+  app.$document = $(document)
+  app.$body = $('body')
 
+  app.init = ->
     app.$document.on 'resize', (e) ->
       PubSub.trigger('app:resize', e)
 
@@ -80,8 +80,5 @@ define (require, exports, module) ->
     setTimeout (->
       callback()
     ), time
-
-  app.module = (additionalProps) ->
-    return _.extend({ View: {} }, additionalProps)
 
   return app

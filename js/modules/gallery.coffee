@@ -1,10 +1,15 @@
-define(["app"], (app) ->
+define (require, exports, module) ->
   "use strict"
 
-  # Create a new module.
-  Gallery = app.module()
+  # External dependencies.
+  _ = require("underscore")
+  $ = require("jquery")
+  Backbone = require("backbone")
+  app = require("app")
+  PubSub = require("pubsub")
 
-  Gallery.View = Backbone.View.extend({
+  # Defining the module class.
+  return Backbone.View.extend({
     el: '.portfolio__list'
     unit: null
     unitSpan: 0
@@ -186,9 +191,3 @@ define(["app"], (app) ->
 
       @$el.height(@setArray.length * @unitSpan);
   })
-
-  console.log Gallery
-
-  return Gallery
-
-)

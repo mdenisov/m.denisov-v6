@@ -1,5 +1,11 @@
-define(["app", "pubsub"], (app, PubSub) ->
+define (require, exports, module) ->
   "use strict"
+
+  # External dependencies.
+  $ = require("jquery")
+  Backbone = require("backbone")
+  app = require("app")
+  PubSub = require("pubsub")
 
   # Defining the application loader view.
   return Backbone.View.extend({
@@ -10,15 +16,18 @@ define(["app", "pubsub"], (app, PubSub) ->
       @$progress = @$el.children()
 
       @pubSub =
-        'app:rendered': @start
+        'app:rendered': @onAfterRender
 
       PubSub.attach(@pubSub, this);
 
-    start: ->
+    onAfterRender: ->
       @$progress.html('0')
       @$el.show()
 
-      $els = app.view.$el.find('img')
+      console.log app.view
+
+#      $els = app.view.$el.find('img')
+      $els = app.$body.find('img')
       total = $els.length
       imageCount = 0
       l = total
@@ -38,5 +47,3 @@ define(["app", "pubsub"], (app, PubSub) ->
     done: ->
       @$el.hide()
   })
-
-)

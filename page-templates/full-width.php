@@ -5,7 +5,7 @@
 
 get_header(); ?>
 
-<div id="main-content" class="main-content" data-module="text">
+<div id="main-content" class="main-content" data-module="page">
 
 	<?php
 		// Start the Loop.

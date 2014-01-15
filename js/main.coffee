@@ -1,14 +1,10 @@
 require(["config"], ->
   require(["app", "router", "loader", "appView"], (app, Router, Loader, appView) ->
-    # Include modules
-#    app.modules.gallery = galleryView
-#    app.modules.galleryItem = galleryItemView
+    # Init Loader
+    app.loader = new Loader()
 
     # Init Base App View
     app.view = new appView()
-
-    # Init Loader
-    app.loader = new Loader()
 
     # Define your master router on the application namespace and trigger all navigation from this instance.
     app.router = new Router()

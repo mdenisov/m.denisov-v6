@@ -1,10 +1,15 @@
-define(["app"], (app) ->
+define (require, exports, module) ->
   "use strict"
 
-  # Create a new module.
-  GalleryItem = app.module()
+  # External dependencies.
+  _ = require("underscore")
+  $ = require("jquery")
+  Backbone = require("backbone")
+  app = require("app")
+  PubSub = require("pubsub")
 
-  GalleryItem.View = Backbone.View.extend({
+  # Defining the module class.
+  return Backbone.View.extend({
     el: '.portfolio__item'
     slider:
       curr: 1
@@ -153,7 +158,3 @@ define(["app"], (app) ->
         @updateNav()
         @updateSlider()
   })
-
-  return GalleryItem
-
-)

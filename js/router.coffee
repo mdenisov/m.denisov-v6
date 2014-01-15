@@ -1,5 +1,11 @@
-define(["app", "pubsub"], (app, PubSub) ->
+define (require, exports, module) ->
   "use strict"
+
+  # External dependencies.
+  $ = require("jquery")
+  Backbone = require("backbone")
+  app = require("app")
+  PubSub = require("pubsub")
 
   # External dependencies.
   # Backbone = require("backbone")
@@ -10,6 +16,9 @@ define(["app", "pubsub"], (app, PubSub) ->
       '*path': 'someRoute'
 
     someRoute: (path) ->
+      if (!path?)
+        path = ''
+
       ajaxPromise = $.Deferred((deferred) ->
         href = app.baseUrl + path
 
@@ -31,5 +40,3 @@ define(["app", "pubsub"], (app, PubSub) ->
       #ajaxPromise.always (error) ->
       # console.log error
   })
-
-)

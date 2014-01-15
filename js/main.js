@@ -2,8 +2,8 @@
 (function() {
   require(["config"], function() {
     return require(["app", "router", "loader", "appView"], function(app, Router, Loader, appView) {
-      app.view = new appView();
       app.loader = new Loader();
+      app.view = new appView();
       app.router = new Router();
       Backbone.history.start({
         pushState: true,

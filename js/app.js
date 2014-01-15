@@ -16,11 +16,11 @@ define(function(require, exports, module) {
   app.subView = null;
   app.modules = {};
   app.loader = {};
+  app.DEBUG = true;
+  app.$window = $(window);
+  app.$document = $(document);
+  app.$body = $('body');
   app.init = function() {
-    app.DEBUG = true;
-    app.$window = $(window);
-    app.$document = $(document);
-    app.$body = $('body');
     app.$document.on('resize', function(e) {
       return PubSub.trigger('app:resize', e);
     });
@@ -74,11 +74,6 @@ define(function(require, exports, module) {
     return setTimeout((function() {
       return callback();
     }), time);
-  };
-  app.module = function(additionalProps) {
-    return _.extend({
-      View: {}
-    }, additionalProps);
   };
   return app;
 });
