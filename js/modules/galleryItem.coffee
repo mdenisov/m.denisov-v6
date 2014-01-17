@@ -23,7 +23,8 @@ define (require, exports, module) ->
         $next: {}
     $sidebar: {}
     $comments: {}
-    timer: null
+    timer1: null
+    timer2: null
 
     events:
       'click .portfolio__nav__item': 'onSliderNavClick'
@@ -55,7 +56,8 @@ define (require, exports, module) ->
       @doSlider()
       @doNav()
 
-      @timer = app.delay(3000, =>
+      @timer1 = app.delay(3000, =>
+        clearTimeout(@timer1)
         app.$body.addClass('hidden')
 
 #        @$sidebar
@@ -125,23 +127,22 @@ define (require, exports, module) ->
         when 39 then @navNext()
 
     onMouseMove: (e) ->
+      clearTimeout(@timer2)
+
       app.$body
-      .removeClass('hidden')
-      .addClass('mousemove')
+        .removeClass('hidden')
+        .addClass('mousemove')
 
-      @slider.nav.$el.show().removeClass('fadeOut').addClass('fadeIn')
+      @slider.nav.$el.addClass('portfolio__nav--shown')
 
-      @timer = setTimeout (=>
+      @timer2 = setTimeout (=>
+        clearTimeout(@timer2)
+
         app.$body
-        .removeClass('mousemove')
-        .addClass('hidden')
+          .removeClass('mousemove')
+          .addClass('hidden')
 
-        @slider.nav.$el.removeClass('fadeIn').addClass('fadeOut')
-
-        app.delay(300, =>
-          @slider.nav.$el.hide()
-        )
-        clearTimeout(@timer)
+        @slider.nav.$el.removeClass('portfolio__nav--shown')
       ), 3000
 
     onSliderNavClick: (e) ->

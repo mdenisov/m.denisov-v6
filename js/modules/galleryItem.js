@@ -23,7 +23,8 @@ define(function(require, exports, module) {
     },
     $sidebar: {},
     $comments: {},
-    timer: null,
+    timer1: null,
+    timer2: null,
     events: {
       'click .portfolio__nav__item': 'onSliderNavClick',
       'click .portfolio__social__item': 'onSocialLinkClick',
@@ -49,7 +50,8 @@ define(function(require, exports, module) {
       app.$body.addClass('fixed');
       this.doSlider();
       this.doNav();
-      this.timer = app.delay(3000, function() {
+      this.timer1 = app.delay(3000, function() {
+        clearTimeout(_this.timer1);
         return app.$body.addClass('hidden');
       });
       return this;
@@ -103,15 +105,13 @@ define(function(require, exports, module) {
     },
     onMouseMove: function(e) {
       var _this = this;
+      clearTimeout(this.timer2);
       app.$body.removeClass('hidden').addClass('mousemove');
-      this.slider.nav.$el.show().removeClass('fadeOut').addClass('fadeIn');
-      return this.timer = setTimeout((function() {
+      this.slider.nav.$el.addClass('portfolio__nav--shown');
+      return this.timer2 = setTimeout((function() {
+        clearTimeout(_this.timer2);
         app.$body.removeClass('mousemove').addClass('hidden');
-        _this.slider.nav.$el.removeClass('fadeIn').addClass('fadeOut');
-        app.delay(300, function() {
-          return _this.slider.nav.$el.hide();
-        });
-        return clearTimeout(_this.timer);
+        return _this.slider.nav.$el.removeClass('portfolio__nav--shown');
       }), 3000);
     },
     onSliderNavClick: function(e) {
