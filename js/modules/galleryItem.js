@@ -44,6 +44,8 @@ define(function(require, exports, module) {
       this.$sidebar = this.$el.find('.portfolio__sidebar');
       this.slider.nav.$el = this.$el.find('.portfolio__nav');
       this.$comments = this.$el.find('.portfolio__comments');
+      this.$comments.find('form').prepend('<div class="portfolio__comment-status" ></div>');
+      this.commentStatus = this.$comments.find('.portfolio__comment-status');
       app.$body.addClass('fixed');
       this.doSlider();
       this.doNav();
@@ -141,16 +143,20 @@ define(function(require, exports, module) {
       }
     },
     onCommentPost: function(e) {
-      var data, form, url;
+      var data, form, url,
+        _this = this;
       form = $(e.currentTarget).parents('form');
       url = form.attr('action');
       data = form.serializeArray();
-      $.post(url, data, function() {
-        return console.log(arguments);
-      }).done(function(data) {
-        return console.log(arguments);
-      }).fail(function(data) {
-        return console.log(arguments);
+      $.post(url, data, function() {}).done(function(data, textStatus) {
+        if (textStatus === "success") {
+          _this.commentStatus.html('<div class="alert alert--success" >Thanks for your comment. We appreciate your response.</div>');
+        } else {
+          _this.commentStatus.html('<div class="alert alert--error" >Please wait a while before posting your next comment</div>');
+        }
+        return form.find('textarea[name=comment]').val('');
+      }).fail(function(data, textStatus) {
+        return _this.commentStatus.html('<div class="alert alert--error" >You might have left one of the fields blank, or be posting too quickly</div>');
       });
       e.preventDefault();
       return e.stopPropagation();

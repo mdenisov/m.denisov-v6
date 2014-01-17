@@ -47,6 +47,9 @@ define (require, exports, module) ->
       @slider.nav.$el = @$el.find('.portfolio__nav')
       @$comments = @$el.find('.portfolio__comments')
 
+      @$comments.find('form').prepend('<div class="portfolio__comment-status" ></div>')
+      @commentStatus = @$comments.find('.portfolio__comment-status')
+
       app.$body.addClass('fixed')
 
       @doSlider()
@@ -168,14 +171,19 @@ define (require, exports, module) ->
       url = form.attr('action')
       data = form.serializeArray()
 
-      $.post( url, data, ->
-        console.log arguments
+      $.post( url, data, =>
+
       )
-      .done( (data) ->
-          console.log arguments
+      .done( (data, textStatus) =>
+          if textStatus is "success"
+            @commentStatus.html('<div class="alert alert--success" >Thanks for your comment. We appreciate your response.</div>')
+          else
+            @commentStatus.html('<div class="alert alert--error" >Please wait a while before posting your next comment</div>')
+
+          form.find('textarea[name=comment]').val('')
       )
-      .fail( (data) ->
-          console.log arguments
+      .fail( (data, textStatus) =>
+          @commentStatus.html('<div class="alert alert--error" >You might have left one of the fields blank, or be posting too quickly</div>')
       )
 
       e.preventDefault()
