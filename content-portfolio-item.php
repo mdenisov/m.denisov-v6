@@ -112,22 +112,22 @@ add_action('wp_head', 'add_fb_open_graph_tags');
 			</div>
 		</header>
 		<div class="portfolio__social">
-			<div class="portfolio__social__item" title="Fave this gallery">
+			<div class="portfolio__social__item" data-type="fave" title="Fave this gallery">
 				<i class="fa fa-star-o"></i> <span class="portfolio__social__count">134</span>
 			</div>
-			<div class="portfolio__social__item" title="Comment">
-				<i class="fa fa-comment-o"></i> <span class="portfolio__social__count">134</span>
+			<div class="portfolio__social__item" data-type="comment" title="Comment">
+				<i class="fa fa-comment-o"></i> <span class="portfolio__social__count"><?= get_comments_number() ?></span>
 			</div>
-			<div class="portfolio__social__item" title="Share this gallery">
+			<div class="portfolio__social__item" data-type="share" title="Share this gallery">
 				<i class="fa fa-external-link"></i>
 			</div>
 		</div>
-		<?php
-		edit_post_link( __( 'Edit', 'twentyfourteen' ), '<span class="edit-link">', '</span>' );
-
-		if ( comments_open() || get_comments_number() ) {
-			comments_template();
-		}
-		?>
+		<div class="portfolio__comments">
+			<?php
+			if ( comments_open() || get_comments_number() ) {
+				comments_template();
+			}
+			?>
+		</div>
 	</aside>
 </article>

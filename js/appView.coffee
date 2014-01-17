@@ -47,8 +47,8 @@ define (require, exports, module) ->
             if (window.chromeless)
               href += ((href.indexOf('?') is -1) ? '?' : '&') + 'chromeless=true';
 
-      Backbone.history.navigate(href, {trigger: true});
-      e.preventDefault();
+            Backbone.history.navigate(href, {trigger: true});
+            e.preventDefault();
 
     render: (html) ->
       if (html isnt null)

@@ -22,10 +22,14 @@ define (require, exports, module) ->
         $curr: {}
         $next: {}
     $sidebar: {}
+    $comments: {}
     timer: null
 
     events:
       'click .portfolio__nav__item': 'onSliderNavClick'
+      'click .portfolio__social__item': 'onSocialLinkClick'
+      'click #submit': 'onCommentPost'
+      'submit form.comment-form': 'onCommentPost'
       'mousemove .portfolio__slider': 'onMouseMove'
       'mouseenter .portfolio__sidebar': 'onSidebarOver'
       'mouseleave .portfolio__sidebar': 'onSidebarLeave'
@@ -41,6 +45,7 @@ define (require, exports, module) ->
       @slider.$el = @$el.find('.portfolio__slider')
       @$sidebar = @$el.find('.portfolio__sidebar')
       @slider.nav.$el = @$el.find('.portfolio__nav')
+      @$comments = @$el.find('.portfolio__comments')
 
       app.$body.addClass('fixed')
 
@@ -50,9 +55,9 @@ define (require, exports, module) ->
       @timer = app.delay(3000, =>
         app.$body.addClass('hidden')
 
-        @$sidebar
-        .removeClass('fadeIn')
-        .addClass('fadeOut')
+#        @$sidebar
+#        .removeClass('fadeIn')
+#        .addClass('fadeOut')
       )
 
       return this
@@ -100,16 +105,16 @@ define (require, exports, module) ->
       @slider.nav.$next.children('.portfolio__nav__item__pos').html('0' + next)
 
     onSidebarOver: ->
-      @$sidebar
-      .removeClass('fadeOut')
-      .addClass('fadeIn')
+#      @$sidebar
+#      .removeClass('fadeOut')
+#      .addClass('fadeIn')
 
     onSidebarLeave: ->
-      app.delay(3000, =>
-        @$sidebar
-        .removeClass('fadeIn')
-        .addClass('fadeOut')
-      )
+#      app.delay(3000, =>
+#        @$sidebar
+#        .removeClass('fadeIn')
+#        .addClass('fadeOut')
+#      )
 
     onKeyDown: (e) ->
       switch e.keyCode
@@ -146,6 +151,36 @@ define (require, exports, module) ->
         if direction is 'next'
           @navNext()
 
+    onSocialLinkClick: (e) ->
+      $target = $(e.currentTarget)
+      type = $target.data('type')
+
+      e.preventDefault()
+      e.stopPropagation()
+
+      switch type
+        when 'fave' then @doFave()
+        when 'comment' then @toggleCommentsBlock()
+        when 'share' then @toggleShareBlock()
+
+    onCommentPost: (e) ->
+      form = $(e.currentTarget).parents('form')
+      url = form.attr('action')
+      data = form.serializeArray()
+
+      $.post( url, data, ->
+        console.log arguments
+      )
+      .done( (data) ->
+          console.log arguments
+      )
+      .fail( (data) ->
+          console.log arguments
+      )
+
+      e.preventDefault()
+      e.stopPropagation()
+
     navPrev: ->
       if @slider.curr > 1
         @slider.curr--
@@ -157,4 +192,11 @@ define (require, exports, module) ->
         @slider.curr++
         @updateNav()
         @updateSlider()
+
+    doFave: ->
+
+    toggleCommentsBlock: ->
+      return @$comments.toggleClass('portfolio__comments--shown')
+
+    toggleShareBlock: ->
   })

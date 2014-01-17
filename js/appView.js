@@ -34,11 +34,11 @@ define(function(require, exports, module) {
           href += ((_ref = href.indexOf('?') === -1) != null ? _ref : {
             '?': '&'
           }) + 'chromeless=true';
-          $targetLink.attr('href', href);
+          return $targetLink.attr('href', href);
         }
       } else {
         if (!app.isValidUrl(href)) {
-          e.preventDefault();
+          return e.preventDefault();
         } else {
           href = app.getDefinedRoute(href);
           if (href !== null) {
@@ -47,13 +47,13 @@ define(function(require, exports, module) {
                 '?': '&'
               }) + 'chromeless=true';
             }
+            Backbone.history.navigate(href, {
+              trigger: true
+            });
+            return e.preventDefault();
           }
         }
       }
-      Backbone.history.navigate(href, {
-        trigger: true
-      });
-      return e.preventDefault();
     },
     render: function(html) {
       var $html;

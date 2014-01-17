@@ -22,9 +22,13 @@ define(function(require, exports, module) {
       }
     },
     $sidebar: {},
+    $comments: {},
     timer: null,
     events: {
       'click .portfolio__nav__item': 'onSliderNavClick',
+      'click .portfolio__social__item': 'onSocialLinkClick',
+      'click #submit': 'onCommentPost',
+      'submit form.comment-form': 'onCommentPost',
       'mousemove .portfolio__slider': 'onMouseMove',
       'mouseenter .portfolio__sidebar': 'onSidebarOver',
       'mouseleave .portfolio__sidebar': 'onSidebarLeave'
@@ -39,12 +43,12 @@ define(function(require, exports, module) {
       this.slider.$el = this.$el.find('.portfolio__slider');
       this.$sidebar = this.$el.find('.portfolio__sidebar');
       this.slider.nav.$el = this.$el.find('.portfolio__nav');
+      this.$comments = this.$el.find('.portfolio__comments');
       app.$body.addClass('fixed');
       this.doSlider();
       this.doNav();
       this.timer = app.delay(3000, function() {
-        app.$body.addClass('hidden');
-        return _this.$sidebar.removeClass('fadeIn').addClass('fadeOut');
+        return app.$body.addClass('hidden');
       });
       return this;
     },
@@ -85,15 +89,8 @@ define(function(require, exports, module) {
       this.slider.nav.$curr.children('.portfolio__nav__item__pos').html('0' + this.slider.curr);
       return this.slider.nav.$next.children('.portfolio__nav__item__pos').html('0' + next);
     },
-    onSidebarOver: function() {
-      return this.$sidebar.removeClass('fadeOut').addClass('fadeIn');
-    },
-    onSidebarLeave: function() {
-      var _this = this;
-      return app.delay(3000, function() {
-        return _this.$sidebar.removeClass('fadeIn').addClass('fadeOut');
-      });
-    },
+    onSidebarOver: function() {},
+    onSidebarLeave: function() {},
     onKeyDown: function(e) {
       switch (e.keyCode) {
         case 37:
@@ -128,6 +125,36 @@ define(function(require, exports, module) {
         }
       }
     },
+    onSocialLinkClick: function(e) {
+      var $target, type;
+      $target = $(e.currentTarget);
+      type = $target.data('type');
+      e.preventDefault();
+      e.stopPropagation();
+      switch (type) {
+        case 'fave':
+          return this.doFave();
+        case 'comment':
+          return this.toggleCommentsBlock();
+        case 'share':
+          return this.toggleShareBlock();
+      }
+    },
+    onCommentPost: function(e) {
+      var data, form, url;
+      form = $(e.currentTarget).parents('form');
+      url = form.attr('action');
+      data = form.serializeArray();
+      $.post(url, data, function() {
+        return console.log(arguments);
+      }).done(function(data) {
+        return console.log(arguments);
+      }).fail(function(data) {
+        return console.log(arguments);
+      });
+      e.preventDefault();
+      return e.stopPropagation();
+    },
     navPrev: function() {
       if (this.slider.curr > 1) {
         this.slider.curr--;
@@ -141,6 +168,11 @@ define(function(require, exports, module) {
         this.updateNav();
         return this.updateSlider();
       }
-    }
+    },
+    doFave: function() {},
+    toggleCommentsBlock: function() {
+      return this.$comments.toggleClass('portfolio__comments--shown');
+    },
+    toggleShareBlock: function() {}
   });
 });

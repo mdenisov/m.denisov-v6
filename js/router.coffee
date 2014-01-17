@@ -17,6 +17,7 @@ define (require, exports, module) ->
 
     someRoute: (path) ->
       if (!path?)
+#        return false
         path = ''
 
       ajaxPromise = $.Deferred((deferred) ->
