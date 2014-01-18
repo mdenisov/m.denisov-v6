@@ -19,7 +19,8 @@
 	<![endif]-->
 	<?php wp_head(); ?>
 	<script>
-		var baseUrl = "<?= site_url(); ?>"
+		var baseUrl = "<?= site_url(); ?>",
+			ajaxurl = "<?= admin_url('admin-ajax.php'); ?>";
 	</script>
 </head>
 

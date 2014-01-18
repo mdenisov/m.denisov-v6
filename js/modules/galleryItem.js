@@ -50,12 +50,14 @@ define(function(require, exports, module) {
       this.$comments = this.$el.find('.portfolio__comments');
       this.$comments.find('form').prepend('<div class="portfolio__comment-status" ></div>');
       this.commentStatus = this.$comments.find('.portfolio__comment-status');
+      this.postId = this.$el.data('post-id');
       app.$body.addClass('fixed');
       this.doSlider();
       this.doNav();
       func = function() {
         _this.timer1 = null;
-        return app.$body.addClass('hidden');
+        app.$body.addClass('hidden');
+        return _this.$sidebar.removeClass('portfolio__sidebar--shown');
       };
       this.timer1 = _.delay(func, 3000);
       return this;
@@ -65,7 +67,10 @@ define(function(require, exports, module) {
       this.timer2 = null;
       app.$body.removeClass('hidden').removeClass('fixed');
       PubSub.unattach(this.pubSub, this);
-      return this.stopListening();
+      this.stopListening();
+      this.undelegateEvents();
+      this.$el.removeData().unbind();
+      return Backbone.View.prototype.remove.call(this);
     },
     doSlider: function() {
       this.slider.$slides = this.slider.$el.find('.portfolio__slider__item');
@@ -146,11 +151,11 @@ define(function(require, exports, module) {
       e.stopPropagation();
       switch (type) {
         case 'fave':
-          return this.doFave();
+          return this.doFave(e);
         case 'comment':
-          return this.toggleCommentsBlock();
+          return this.toggleCommentsBlock(e);
         case 'share':
-          return this.toggleShareBlock();
+          return this.toggleShareBlock(e);
       }
     },
     onCommentPost: function(e) {
@@ -190,7 +195,21 @@ define(function(require, exports, module) {
         return this.updateSlider();
       }
     },
-    doFave: function() {},
+    doFave: function(e) {
+      var counter, data, url,
+        _this = this;
+      counter = $(e.currentTarget).children('.portfolio__social__count');
+      url = app.ajaxUrl;
+      data = {
+        action: 'fave',
+        id: this.postId
+      };
+      return $.post(url, data, function() {}).done(function(data, textStatus) {
+        return counter.html(data);
+      }).fail(function(data, textStatus) {
+        return console.log(data);
+      });
+    },
     toggleCommentsBlock: function() {
       return this.$comments.toggleClass('portfolio__comments--shown');
     },

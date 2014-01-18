@@ -54,6 +54,8 @@ define (require, exports, module) ->
       @$comments.find('form').prepend('<div class="portfolio__comment-status" ></div>')
       @commentStatus = @$comments.find('.portfolio__comment-status')
 
+      @postId = @$el.data('post-id')
+
       app.$body.addClass('fixed')
 
       @doSlider()
@@ -62,7 +64,7 @@ define (require, exports, module) ->
       func = () =>
         @timer1 = null
         app.$body.addClass('hidden')
-#        @$sidebar.removeClass('portfolio__sidebar--shown')
+        @$sidebar.removeClass('portfolio__sidebar--shown')
       @timer1 = _.delay(func, 3000)
 
       return this
@@ -73,6 +75,10 @@ define (require, exports, module) ->
       app.$body.removeClass('hidden').removeClass('fixed')
       PubSub.unattach(@pubSub, @)
       @.stopListening()
+
+      @.undelegateEvents();
+      @.$el.removeData().unbind();
+      Backbone.View.prototype.remove.call(this);
 
     doSlider: ->
       @slider.$slides = @slider.$el.find('.portfolio__slider__item')
@@ -158,9 +164,9 @@ define (require, exports, module) ->
       e.stopPropagation()
 
       switch type
-        when 'fave' then @doFave()
-        when 'comment' then @toggleCommentsBlock()
-        when 'share' then @toggleShareBlock()
+        when 'fave' then @doFave(e)
+        when 'comment' then @toggleCommentsBlock(e)
+        when 'share' then @toggleShareBlock(e)
 
     onCommentPost: (e) ->
       form = $(e.currentTarget).parents('form')
@@ -201,7 +207,20 @@ define (require, exports, module) ->
         @updateNav()
         @updateSlider()
 
-    doFave: ->
+    doFave: (e) ->
+      counter = $(e.currentTarget).children('.portfolio__social__count')
+      url = app.ajaxUrl
+      data = {action: 'fave', id: @postId}
+
+      $.post( url, data, =>
+
+      )
+      .done( (data, textStatus) =>
+          counter.html(data)
+        )
+      .fail( (data, textStatus) =>
+          console.log data
+        )
 
     toggleCommentsBlock: ->
       return @$comments.toggleClass('portfolio__comments--shown')

@@ -82,4 +82,54 @@ function print_comments($comment, $args, $depth) {
 <?php
 }
 
+
+function set_pageviews($postId){
+	if(is_single()){
+		global $post;
+		$pv = get_post_meta($postId, '_pageviews',true);
+		update_post_meta($postId, '_pageviews', $pv+1);
+	}
+}
+
+function the_pageview($postId){
+	$pv = get_post_meta($postId, '_pageviews',true);
+	echo $pv ? $pv : 0;
+}
+
+function get_the_pageview($postId){
+	$pv = get_post_meta($postId, '_pageviews',true);
+	return $pv ? $pv : 0;
+}
+
+
+
+function set_fave($postId) {
+	$pv = get_post_meta($postId, '_faves',true);
+	update_post_meta($postId, '_faves', $pv+1);
+}
+
+function the_fave($postId) {
+	$pv = get_post_meta($postId, '_faves',true);
+	echo $pv ? $pv : 0;
+}
+
+function get_the_fave($postId) {
+	$pv = get_post_meta($postId, '_faves',true);
+	return $pv ? $pv : 0;
+}
+
+add_action("wp_ajax_fave", "fave");
+add_action("wp_ajax_nopriv_fave", "fave");
+
+function fave() {
+	$post_id = $_REQUEST['id'];
+
+	if ( !empty($post_id) ) {
+		set_fave($post_id);
+	}
+
+	echo get_the_fave($post_id);
+	die();
+}
+
 ?>

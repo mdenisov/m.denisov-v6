@@ -2367,6 +2367,9 @@ body.fixed {
   cursor: pointer;
   position: relative;
 }
+.portfolio__social__item--nolink {
+  cursor: default;
+}
 .portfolio__social__count {
   font-size: 18px;
   line-height: 1;

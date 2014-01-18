@@ -9,6 +9,7 @@ define(function(require, exports, module) {
   app = module.exports;
   app.testDomain = 'http://localhost/photosite/';
   app.baseUrl = baseUrl + '/';
+  app.ajaxUrl = ajaxurl + '/';
   app.root = "/photosite/";
   app.testRoot = "/photosite/";
   app.domainRegex = "";

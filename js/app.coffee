@@ -13,6 +13,7 @@ define (require, exports, module) ->
   # The root path to run the application through.
   app.testDomain = 'http://localhost/photosite/'
   app.baseUrl = baseUrl + '/'
+  app.ajaxUrl = ajaxurl + '/'
 #  app.baseUrl = window.location.protocol + '//' + window.location.host + '/'
   app.root = "/photosite/"
   app.testRoot = "/photosite/"
