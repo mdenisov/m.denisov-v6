@@ -113,9 +113,24 @@ define (require, exports, module) ->
       else
         @slider.nav.$next.removeClass('portfolio__nav__item--hidden')
 
-      @slider.nav.$prev.children('.portfolio__nav__item__pos').html('0' + prev)
-      @slider.nav.$curr.children('.portfolio__nav__item__pos').html('0' + @slider.curr)
-      @slider.nav.$next.children('.portfolio__nav__item__pos').html('0' + next)
+      if @slider.curr < 10
+        pref = '0'
+      else
+        pref = ''
+
+      if prev < 10
+        prefP = '0'
+      else
+        prefP = ''
+
+      if next < 10
+        prefN = '0'
+      else
+        prefN = ''
+
+      @slider.nav.$prev.children('.portfolio__nav__item__pos').html(prefP + prev)
+      @slider.nav.$curr.children('.portfolio__nav__item__pos').html(pref + @slider.curr)
+      @slider.nav.$next.children('.portfolio__nav__item__pos').html(prefN + next)
 
     onSidebarOver: ->
       @$sidebar.addClass('portfolio__sidebar--shown')

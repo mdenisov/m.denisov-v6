@@ -87,7 +87,7 @@ define(function(require, exports, module) {
       return this.updateNav();
     },
     updateNav: function() {
-      var next, prev;
+      var next, pref, prefN, prefP, prev;
       prev = this.slider.curr - 1;
       next = this.slider.curr + 1;
       if (this.slider.curr === 1) {
@@ -100,9 +100,24 @@ define(function(require, exports, module) {
       } else {
         this.slider.nav.$next.removeClass('portfolio__nav__item--hidden');
       }
-      this.slider.nav.$prev.children('.portfolio__nav__item__pos').html('0' + prev);
-      this.slider.nav.$curr.children('.portfolio__nav__item__pos').html('0' + this.slider.curr);
-      return this.slider.nav.$next.children('.portfolio__nav__item__pos').html('0' + next);
+      if (this.slider.curr < 10) {
+        pref = '0';
+      } else {
+        pref = '';
+      }
+      if (prev < 10) {
+        prefP = '0';
+      } else {
+        prefP = '';
+      }
+      if (next < 10) {
+        prefN = '0';
+      } else {
+        prefN = '';
+      }
+      this.slider.nav.$prev.children('.portfolio__nav__item__pos').html(prefP + prev);
+      this.slider.nav.$curr.children('.portfolio__nav__item__pos').html(pref + this.slider.curr);
+      return this.slider.nav.$next.children('.portfolio__nav__item__pos').html(prefN + next);
     },
     onSidebarOver: function() {
       return this.$sidebar.addClass('portfolio__sidebar--shown');
