@@ -321,6 +321,7 @@ body {
 		right: 0;
 		top: 0;
 		padding: 20px;
+		overflow: visible;
 		overflow-y: auto;
 		.opacity(0);
 		.rgba(#262628, .8);
@@ -380,12 +381,27 @@ body {
 			display: inline-block;
 			margin-right: 15px;
 			cursor: pointer;
+			position: relative;
 		}
 
 		&__count {
 			font-size: 18px;
 			line-height: 1;
 			vertical-align: 2px;
+		}
+
+		&__popover {
+			top: 30px;
+			right: -20px;
+			position: absolute;
+			width: 320px;
+			height: auto;
+			border: 1px solid #58585b;
+			padding: 20px;
+			.border-radius(4px);
+			@shadow: 0 2px 6px rgba(0,0,0,0.3),0px 0 0 1px rgba(0,0,0,0.7);
+			.box-shadow(@shadow);
+			.rgba(#2E2E32, .95);
 		}
 	}
 
@@ -466,6 +482,7 @@ body {
 
 		&__date {
 			font-size: 11px;
+			color: @link-color;
 			&:extend(.pull-right);
 		}
 	}

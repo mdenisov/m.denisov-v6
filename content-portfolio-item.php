@@ -112,15 +112,18 @@ add_action('wp_head', 'add_fb_open_graph_tags');
 			</div>
 		</header>
 		<div class="portfolio__social">
+			<iframe src="//www.facebook.com/plugins/like.php?href=<?= get_permalink() ?>&amp;width=280&amp;layout=standard&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=80&amp;appId=242541585808831&amp;colorscheme=dark" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:280px; height:26px;" allowTransparency="true"></iframe>
+		</div>
+		<div class="portfolio__social">
 			<div class="portfolio__social__item" data-type="fave" title="Fave this gallery">
 				<i class="fa fa-star-o"></i> <span class="portfolio__social__count">134</span>
 			</div>
 			<div class="portfolio__social__item" data-type="comment" title="Comment">
 				<i class="fa fa-comment-o"></i> <span class="portfolio__social__count"><?= get_comments_number() ?></span>
 			</div>
-			<div class="portfolio__social__item" data-type="share" title="Share this gallery">
-				<i class="fa fa-external-link"></i>
-			</div>
+<!--			<div class="portfolio__social__item" data-type="share" title="Share this gallery">-->
+<!--				<i class="fa fa-external-link"></i>-->
+<!--			</div>-->
 		</div>
 		<div class="portfolio__comments">
 			<?php

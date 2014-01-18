@@ -62,16 +62,13 @@ define (require, exports, module) ->
       func = () =>
         @timer1 = null
         app.$body.addClass('hidden')
-
-        #        @$sidebar
-        #        .removeClass('fadeIn')
-        #        .addClass('fadeOut')
+#        @$sidebar.removeClass('portfolio__sidebar--shown')
       @timer1 = _.delay(func, 3000)
 
       return this
 
     destroy: ->
-      clearTimeout(@timer1)
+      @timer1 = null
       @timer2 = null
       app.$body.removeClass('hidden').removeClass('fixed')
       PubSub.unattach(@pubSub, @)
@@ -115,16 +112,10 @@ define (require, exports, module) ->
       @slider.nav.$next.children('.portfolio__nav__item__pos').html('0' + next)
 
     onSidebarOver: ->
-#      @$sidebar
-#      .removeClass('fadeOut')
-#      .addClass('fadeIn')
+      @$sidebar.addClass('portfolio__sidebar--shown')
 
     onSidebarLeave: ->
-#      app.delay(3000, =>
-#        @$sidebar
-#        .removeClass('fadeIn')
-#        .addClass('fadeOut')
-#      )
+      @$sidebar.removeClass('portfolio__sidebar--shown')
 
     onKeyDown: (e) ->
       switch e.keyCode

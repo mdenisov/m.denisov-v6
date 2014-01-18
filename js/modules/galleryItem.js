@@ -61,7 +61,7 @@ define(function(require, exports, module) {
       return this;
     },
     destroy: function() {
-      clearTimeout(this.timer1);
+      this.timer1 = null;
       this.timer2 = null;
       app.$body.removeClass('hidden').removeClass('fixed');
       PubSub.unattach(this.pubSub, this);
@@ -99,8 +99,12 @@ define(function(require, exports, module) {
       this.slider.nav.$curr.children('.portfolio__nav__item__pos').html('0' + this.slider.curr);
       return this.slider.nav.$next.children('.portfolio__nav__item__pos').html('0' + next);
     },
-    onSidebarOver: function() {},
-    onSidebarLeave: function() {},
+    onSidebarOver: function() {
+      return this.$sidebar.addClass('portfolio__sidebar--shown');
+    },
+    onSidebarLeave: function() {
+      return this.$sidebar.removeClass('portfolio__sidebar--shown');
+    },
     onKeyDown: function(e) {
       switch (e.keyCode) {
         case 37:
