@@ -29,13 +29,16 @@ define(function(require, exports, module) {
       'click .portfolio__nav__item': 'onSliderNavClick',
       'click .portfolio__social__item': 'onSocialLinkClick',
       'click #submit': 'onCommentPost',
+      'click .comment-reply-link': 'onCommentReplyClick',
+      'click #cancel-comment-reply-link': 'onCommentReplyClick',
       'submit form.comment-form': 'onCommentPost',
       'mousemove .portfolio__slider': 'onMouseMove',
       'mouseenter .portfolio__sidebar': 'onSidebarOver',
       'mouseleave .portfolio__sidebar': 'onSidebarLeave'
     },
     initialize: function() {
-      var _this = this;
+      var func,
+        _this = this;
       this.pubSub = {
         'app:keydown': this.onKeyDown
       };
@@ -50,16 +53,19 @@ define(function(require, exports, module) {
       app.$body.addClass('fixed');
       this.doSlider();
       this.doNav();
-      this.timer1 = app.delay(3000, function() {
-        clearTimeout(_this.timer1);
+      func = function() {
+        _this.timer1 = null;
         return app.$body.addClass('hidden');
-      });
+      };
+      this.timer1 = _.delay(func, 3000);
       return this;
     },
     destroy: function() {
-      clearTimeout(this.timer);
+      clearTimeout(this.timer1);
+      this.timer2 = null;
       app.$body.removeClass('hidden').removeClass('fixed');
-      return PubSub.unattach(this.pubSub, this);
+      PubSub.unattach(this.pubSub, this);
+      return this.stopListening();
     },
     doSlider: function() {
       this.slider.$slides = this.slider.$el.find('.portfolio__slider__item');
@@ -104,15 +110,16 @@ define(function(require, exports, module) {
       }
     },
     onMouseMove: function(e) {
-      var _this = this;
-      clearTimeout(this.timer2);
+      var func,
+        _this = this;
+      this.timer2 = null;
       app.$body.removeClass('hidden').addClass('mousemove');
-      this.slider.nav.$el.addClass('portfolio__nav--shown');
-      return this.timer2 = setTimeout((function() {
-        clearTimeout(_this.timer2);
+      this.slider.nav.$el.stop().fadeIn();
+      func = function() {
         app.$body.removeClass('mousemove').addClass('hidden');
-        return _this.slider.nav.$el.removeClass('portfolio__nav--shown');
-      }), 3000);
+        return _this.slider.nav.$el.stop().fadeOut();
+      };
+      return this.timer2 = _.delay(func, 3000);
     },
     onSliderNavClick: function(e) {
       var $target, direction;
@@ -158,6 +165,10 @@ define(function(require, exports, module) {
       }).fail(function(data, textStatus) {
         return _this.commentStatus.html('<div class="alert alert--error" >You might have left one of the fields blank, or be posting too quickly</div>');
       });
+      e.preventDefault();
+      return e.stopPropagation();
+    },
+    onCommentReplyClick: function(e) {
       e.preventDefault();
       return e.stopPropagation();
     },

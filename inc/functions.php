@@ -63,8 +63,9 @@ function print_comments($comment, $args, $depth) {
 			<h5 class="comments__item__user"><?= get_comment_author(); ?></h5>
 			<div class="comments__item__date"><?php printf( __('%1$s at %2$s'), get_comment_date(),  get_comment_time()) ?></div>
 
-			<?php //comment_reply_link(array_merge( $args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
-			<?php edit_comment_link(__('(Edit)'),'  ','' ); ?>
+			<div class="clearfix"></div>
+
+			<?php comment_reply_link(array_merge( $args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
 
 			<?php if ($comment->comment_approved == '0') : ?>
 				<p>

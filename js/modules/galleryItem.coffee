@@ -30,8 +30,11 @@ define (require, exports, module) ->
       'click .portfolio__nav__item': 'onSliderNavClick'
       'click .portfolio__social__item': 'onSocialLinkClick'
       'click #submit': 'onCommentPost'
+      'click .comment-reply-link': 'onCommentReplyClick'
+      'click #cancel-comment-reply-link': 'onCommentReplyClick'
       'submit form.comment-form': 'onCommentPost'
       'mousemove .portfolio__slider': 'onMouseMove'
+#      'mousemove .portfolio__nav': 'onMouseMove'
       'mouseenter .portfolio__sidebar': 'onSidebarOver'
       'mouseleave .portfolio__sidebar': 'onSidebarLeave'
 #    'click .portfolio__sidebar__close': 'onSidebarLeave'
@@ -56,21 +59,23 @@ define (require, exports, module) ->
       @doSlider()
       @doNav()
 
-      @timer1 = app.delay(3000, =>
-        clearTimeout(@timer1)
+      func = () =>
+        @timer1 = null
         app.$body.addClass('hidden')
 
-#        @$sidebar
-#        .removeClass('fadeIn')
-#        .addClass('fadeOut')
-      )
+        #        @$sidebar
+        #        .removeClass('fadeIn')
+        #        .addClass('fadeOut')
+      @timer1 = _.delay(func, 3000)
 
       return this
 
     destroy: ->
-      clearTimeout(@timer)
+      clearTimeout(@timer1)
+      @timer2 = null
       app.$body.removeClass('hidden').removeClass('fixed')
-      PubSub.unattach(@pubSub, this)
+      PubSub.unattach(@pubSub, @)
+      @.stopListening()
 
     doSlider: ->
       @slider.$slides = @slider.$el.find('.portfolio__slider__item')
@@ -127,23 +132,22 @@ define (require, exports, module) ->
         when 39 then @navNext()
 
     onMouseMove: (e) ->
-      clearTimeout(@timer2)
+      @timer2 = null
 
       app.$body
         .removeClass('hidden')
         .addClass('mousemove')
 
-      @slider.nav.$el.addClass('portfolio__nav--shown')
+      @slider.nav.$el.stop().fadeIn()
 
-      @timer2 = setTimeout (=>
-        clearTimeout(@timer2)
-
+      func = () =>
         app.$body
           .removeClass('mousemove')
           .addClass('hidden')
 
-        @slider.nav.$el.removeClass('portfolio__nav--shown')
-      ), 3000
+        @slider.nav.$el.stop().fadeOut()
+
+      @timer2 = _.delay(func, 3000)
 
     onSliderNavClick: (e) ->
       $target = $(e.currentTarget)
@@ -187,6 +191,10 @@ define (require, exports, module) ->
           @commentStatus.html('<div class="alert alert--error" >You might have left one of the fields blank, or be posting too quickly</div>')
       )
 
+      e.preventDefault()
+      e.stopPropagation()
+
+    onCommentReplyClick: (e) ->
       e.preventDefault()
       e.stopPropagation()
 

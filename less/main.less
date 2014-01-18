@@ -260,12 +260,6 @@ body {
 //			display: block;
 		}
 
-		&--shown {
-			display: block;
-			-webkit-animation-duration: .3s;
-			-webkit-animation-name: fadeInFromNone;
-		}
-
 		&__list {
 			position: absolute;
 			top: 50%;
@@ -467,16 +461,32 @@ body {
 			margin-bottom: 2px;
 			font-weight: 300;
 			color: @link-color;
+			&:extend(.pull-left);
 		}
 
 		&__date {
 			font-size: 11px;
+			&:extend(.pull-right);
+		}
+	}
+
+	.children {
+		.comments__item__content {
+			width: 208px;
 		}
 	}
 
 	textarea {
 		width: 100%;
 		height: 100px;
+	}
+}
+
+.comment-respond {
+	.font-size();
+
+	.comment-reply-title {
+		font-size: 14px;
 	}
 }
 
