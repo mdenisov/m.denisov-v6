@@ -10,6 +10,12 @@ get_header(); ?>
 	<div class="portfolio__list">
 
 		<?php
+		if ( get_theme_mod( 'featured_image' ) ) :
+			get_template_part( 'content', 'featured' );
+		endif;
+		?>
+
+		<?php
 		$portfolio_category = get_post_meta($post->ID, MTHEME . '_portfolio_category', true);
 		$portfolio_perpage = get_post_meta($post->ID, MTHEME . '_portfolio_perpage', true);
 		$portfolio_link = get_post_meta($post->ID, MTHEME . '_portfolio_link', true);

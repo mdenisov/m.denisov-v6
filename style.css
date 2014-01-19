@@ -2129,6 +2129,28 @@ body.fixed {
   background-color: #000000;
   background-color: rgba(0, 0, 0, 0.7);
 }
+.portfolio__item--stub .portfolio__preview {
+  filter: grayscale(90%);
+  -webkit-filter: grayscale(90%);
+  -moz-filter: grayscale(90%);
+  -o-filter: grayscale(90%);
+  -ms-filter: grayscale(90%);
+}
+.portfolio__stub {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: #000000;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.portfolio__stub__img {
+  display: block;
+  height: 80%;
+  margin: 10% auto;
+}
 .portfolio__title {
   font-size: 22px;
   line-height: 28px;

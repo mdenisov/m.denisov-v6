@@ -529,4 +529,5 @@ require get_template_directory() . '/inc/template-tags.php';
 /* Require theme functions */
 /*-------------------------------------------------------------------------*/
 require get_template_directory() . '/inc/functions.php';
+require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/post-types/portfolio.php';

@@ -191,6 +191,33 @@ body {
 				.rgba(@portfolio-background, .7);
 			}
 		}
+
+		&--stub {
+			.portfolio__preview {
+				filter: grayscale(90%);
+				// Browser Specific
+				-webkit-filter: grayscale(90%);
+				-moz-filter: grayscale(90%);
+				-o-filter: grayscale(90%);
+				-ms-filter: grayscale(90%);
+			}
+		}
+	}
+
+	&__stub {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1;
+		.rgba(#000000, .5);
+
+		&__img {
+			display: block;
+			height: 80%;
+			margin: 10% auto;
+		}
 	}
 
 	&__header {
