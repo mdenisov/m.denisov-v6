@@ -2281,9 +2281,10 @@ body.fixed {
   display: none;
   cursor: pointer;
   font-size: 20px;
-  text-align: center;
-  width: 20px;
-  height: 20px;
+  padding: 5px;
+  background: url("img/sprite.png") no-repeat -77px -47px;
+  width: 22px;
+  height: 22px;
   -webkit-transition: background 0.2s;
   -moz-transition: background 0.2s;
   -o-transition: background 0.2s;

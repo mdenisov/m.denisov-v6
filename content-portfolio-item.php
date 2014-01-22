@@ -92,7 +92,7 @@ add_action('wp_head', 'add_fb_open_graph_tags');
 			<li class="portfolio__nav__item portfolio__nav__item--next" data-direction="next"><i class="fa fa-angle-right"></i> <span class="portfolio__nav__item__pos">02</span></li>
 		</ul>
 	</div>
-	<span class="portfolio__info"><i class="fa fa-info"></i></span>
+	<span class="portfolio__info"></span>
 	<aside class="portfolio__sidebar portfolio__sidebar--shown">
 		<span class="portfolio__sidebar__close"></span>
 		<header class="portfolio__header">
