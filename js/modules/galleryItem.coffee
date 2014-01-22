@@ -50,6 +50,7 @@ define (require, exports, module) ->
       @$sidebar = @$el.find('.portfolio__sidebar')
       @slider.nav.$el = @$el.find('.portfolio__nav')
       @$comments = @$el.find('.portfolio__comments')
+      @$info = @$el.find('.portfolio__info')
 
       @$comments.find('form').prepend('<div class="portfolio__comment-status" ></div>')
       @commentStatus = @$comments.find('.portfolio__comment-status')

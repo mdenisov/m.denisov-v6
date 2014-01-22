@@ -2271,6 +2271,28 @@ body.fixed {
 .portfolio__nav__item--hidden {
   display: none;
 }
+.mobile .portfolio__info {
+  display: inline-block;
+}
+.portfolio__info {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: none;
+  cursor: pointer;
+  font-size: 20px;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  -webkit-transition: background 0.2s;
+  -moz-transition: background 0.2s;
+  -o-transition: background 0.2s;
+  transition: background 0.2s;
+}
+.portfolio__info:hover {
+  background-color: #000000;
+  background-color: rgba(0, 0, 0, 0.2);
+}
 .portfolio__sidebar {
   position: absolute;
   width: 320px;
@@ -2278,8 +2300,8 @@ body.fixed {
   right: 0;
   top: 0;
   padding: 20px;
-  overflow: visible;
   overflow-y: auto;
+  z-index: 20;
   opacity: 0;
   filter: alpha(opacity=0);
   background-color: #262628;
@@ -2293,11 +2315,14 @@ body.fixed {
   opacity: 1;
   filter: alpha(opacity=100);
 }
+.mobile .portfolio__sidebar__close {
+  display: inline-block;
+}
 .portfolio__sidebar__close {
   position: absolute;
   top: 10px;
   right: 10px;
-  display: inline-block;
+  display: none;
   cursor: pointer;
   background: url("img/sprite.png") no-repeat 3px -47px;
   width: 20px;

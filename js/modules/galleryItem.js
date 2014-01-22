@@ -48,6 +48,7 @@ define(function(require, exports, module) {
       this.$sidebar = this.$el.find('.portfolio__sidebar');
       this.slider.nav.$el = this.$el.find('.portfolio__nav');
       this.$comments = this.$el.find('.portfolio__comments');
+      this.$info = this.$el.find('.portfolio__info');
       this.$comments.find('form').prepend('<div class="portfolio__comment-status" ></div>');
       this.commentStatus = this.$comments.find('.portfolio__comment-status');
       this.postId = this.$el.data('post-id');

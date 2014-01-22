@@ -341,6 +341,28 @@ body {
 		}
 	}
 
+	.mobile & {
+		&__info {
+			display: inline-block;
+		}
+	}
+
+	&__info {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		display: none;
+		cursor: pointer;
+		font-size: 20px;
+		text-align: center;
+		.square(20px);
+		.transition(background .2s);
+
+		&:hover {
+			.rgba(#000000, .2);
+		}
+	}
+
 	&__sidebar {
 		position: absolute;
 		width: 320px;
@@ -348,8 +370,8 @@ body {
 		right: 0;
 		top: 0;
 		padding: 20px;
-		overflow: visible;
 		overflow-y: auto;
+		z-index: 20;
 		.opacity(0);
 		.rgba(#262628, .8);
 		.transition(opacity .2s);
@@ -358,11 +380,17 @@ body {
 			.opacity(100);
 		}
 
+		.mobile & {
+			&__close {
+				display: inline-block;
+			}
+		}
+
 		&__close {
 			position: absolute;
 			top: 10px;
 			right: 10px;
-			display: inline-block;
+			display: none;
 			cursor: pointer;
 			background: url(@sprite-path) no-repeat 3px -47px;
 			.square(20px);

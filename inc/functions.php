@@ -65,8 +65,6 @@ function print_comments($comment, $args, $depth) {
 
 			<div class="clearfix"></div>
 
-			<?php comment_reply_link(array_merge( $args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
-
 			<?php if ($comment->comment_approved == '0') : ?>
 				<p>
 					<em class="comment-awaiting-moderation"><?php _e('Your comment is awaiting moderation.') ?></em>
@@ -75,6 +73,9 @@ function print_comments($comment, $args, $depth) {
 			<?php endif; ?>
 
 			<?php comment_text() ?>
+
+			<?php comment_reply_link(array_merge( $args, array('add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+
 		</div>
 
 	</div>
