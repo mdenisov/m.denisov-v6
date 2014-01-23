@@ -134,6 +134,7 @@ define (require, exports, module) ->
       @slider.nav.$next.children('.portfolio__nav__item__pos').html(prefN + next)
 
     onSidebarOver: ->
+      @timer2 = null
       @$sidebar.addClass('portfolio__sidebar--shown')
 
     onSidebarLeave: ->

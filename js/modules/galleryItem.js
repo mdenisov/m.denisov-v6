@@ -121,6 +121,7 @@ define(function(require, exports, module) {
       return this.slider.nav.$next.children('.portfolio__nav__item__pos').html(prefN + next);
     },
     onSidebarOver: function() {
+      this.timer2 = null;
       return this.$sidebar.addClass('portfolio__sidebar--shown');
     },
     onSidebarLeave: function() {

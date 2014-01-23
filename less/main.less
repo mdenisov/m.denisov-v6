@@ -567,6 +567,18 @@ body {
 	}
 }
 
+.page {
+	height: 100%;
+
+	.entry-content {
+		width: 100%;
+		height: 100%;
+		padding-left: 50%;
+		display: table;
+		position: relative;
+	}
+}
+
 .alert {
 	padding: 15px;
 	margin-bottom: 20px;
@@ -589,6 +601,53 @@ body {
 	&--danger {
 		color: #a94442;
 		background-color: #f2dede;
+	}
+}
+
+.contacts {
+	display: table-cell;
+	vertical-align: bottom;
+	padding-bottom: 80px;
+
+	&__image {
+		height: 100%;
+		width: 50%;
+		position: absolute;
+		left: 0px;
+		padding: 50px;
+
+		&__img {
+			height: 100%;
+			width: auto;
+		}
+	}
+
+	&__name {
+		font-size: 20px;
+		font-weight: bold;
+		margin-bottom: 20px;
+
+		&__more {
+			font-size: 15px;
+			text-transform: uppercase;
+			font-weight: normal;
+		}
+	}
+
+	&__info {
+		font-size: 15px;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		&__item {
+			line-height: 20px;
+
+			i {
+				width: 16px;
+				text-align: center;
+			}
+		}
 	}
 }
 
