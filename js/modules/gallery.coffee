@@ -45,12 +45,12 @@ define (require, exports, module) ->
       # Set up number of cols
       numCols = @setCols()
 
+      console.log numCols
+
       # Only relayout if cols has changed
       if @numCols isnt numCols or forceReload
 
         @numCols = numCols;
-
-        #      this.container = $(this.containerSelector);
 
         # Reset selection of elements
         @unit = $('.portfolio__item')
@@ -74,9 +74,9 @@ define (require, exports, module) ->
         else
           # Otherwise, kill the grid
           @clear()
-          @$el.width(@numCols * @itemWidth).addClass('portfolio__list--centered')
 
     clear: ->
+      @$el.width(@numCols * @itemWidth).addClass('portfolio__list--centered')
       @unit = $('.portfolio__item')
 
       # Reset all CSS back to default as specified in CSS
@@ -122,7 +122,7 @@ define (require, exports, module) ->
       $(shuffled)
 
     setCols: ->
-      (@$el.width() / @itemWidth) | 0
+      (app.$window.width() / @itemWidth) | 0
 
     layout: ->
       @unitSpan = @$el.innerWidth() / @numCols;
@@ -145,62 +145,71 @@ define (require, exports, module) ->
       gridUnit = {}
 
       # Loop through the grid units
-      for key in @unit
-        gridUnit = $(key)
-        rowSpan = parseInt(gridUnit.data("rowspan"),10)
-        colSpan = parseInt(gridUnit.data("colspan"),10)
+      key = 0
+
+      while key < @unit.length
+        gridUnit = $(@unit[key])
+        rowSpan = parseInt(gridUnit.attr("data-rowspan"), 10)
+        colSpan = parseInt(gridUnit.attr("data-colspan"), 10)
         placed = false
         newRow = []
         width = @unitSpan * colSpan
         height = @unitSpan * rowSpan
-
-        gridUnit.css({
-          width: width,
+        gridUnit.css
+          width: width
           height: height
-        })
+
 
         # For each grid row
-        for row of @setArray
+        row = 0
+
+        while row <= @setArray.length
+
+          #$.each(grid.setArray, function(rowNum, row){
           freeUnits = 0
           takenUnits = 0
 
-          #        console.log row
+          # Check for free columns
+          col = 0
 
-          for col of @setArray[row]
+          while col <= @setArray[row].length
+
+            # If there's a free space, note it down
             if @setArray[row][col] is 0
               freeUnits++
             else
               freeUnits = 0
               takenUnits++
 
-            #          console.log freeUnits
-
             # If the number of free spaces in this row matches the number needed
             if freeUnits is colSpan
-#            console.log gridUnit
-              gridUnit.css({
-                top: row * @unitSpan,
+              gridUnit.css
+                top: row * @unitSpan
                 left: (col - (colSpan - 1)) * @unitSpan
-              })
+
 
               # Mark off which units we used
               i = colSpan + (col - (colSpan - 1)) - 1
+
               while i >= (col - (colSpan - 1))
                 @setArray[row][i] = 1
                 i--
 
+              # If this is taller than one row
               if rowSpan > 1
+
+                # Add new row
                 newRow = []
-
-                i = @numCols
-                while i--
+                i = 0
+                while i <= @numCols - 1
                   newRow[i] = 0
-                @setArray.push(newRow)
+                  i++
+                @setArray.push newRow
 
-                # Add taken units to this row too
+                #Add taken units to this row too
                 i = colSpan + (col - (colSpan - 1)) - 1
                 while i >= (col - (colSpan - 1))
-                  @setArray[parseInt(row, 10) + 1][i] = 1
+                  @setArray[row + 1][i] = 1
                   i--
 
               # We've placed it
@@ -208,23 +217,31 @@ define (require, exports, module) ->
 
               # Break out of this loop
               break
+            col++
 
           # If we haven't placed it
-          if !placed
-            # If there's no more rows
-            if @setArray[row + 1]?
-              # Add a new row
+          unless placed
+
+            #If there's no more rows
+            unless @setArray[row + 1]
+
+              #Add a new row
               newRow = []
-              i = @numCols
-              while i--
+              i = 0
+              while i <= @numCols - 1
                 newRow[i] = 0
-              @setArray.push(newRow)
+                i++
+              @setArray.push newRow
           else
+
             # Break out to next unit
             break
+          row++
+        key++
 
       @$el.height(@setArray.length * @unitSpan);
 
     resize: ->
+      @$el.width('auto').removeClass('portfolio__list--centered')
       @initGrid(true);
   })

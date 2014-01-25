@@ -37,6 +37,7 @@ define(function(require, exports, module) {
     initGrid: function(forceReload) {
       var i, newRow, numCols;
       numCols = this.setCols();
+      console.log(numCols);
       if (this.numCols !== numCols || forceReload) {
         this.numCols = numCols;
         this.unit = $('.portfolio__item');
@@ -50,12 +51,12 @@ define(function(require, exports, module) {
         if (this.numCols >= 3) {
           return this.layout();
         } else {
-          this.clear();
-          return this.$el.width(this.numCols * this.itemWidth).addClass('portfolio__list--centered');
+          return this.clear();
         }
       }
     },
     clear: function() {
+      this.$el.width(this.numCols * this.itemWidth).addClass('portfolio__list--centered');
       this.unit = $('.portfolio__item');
       this.setArray = [];
       this.unit.css({
@@ -92,10 +93,10 @@ define(function(require, exports, module) {
       return $(shuffled);
     },
     setCols: function() {
-      return (this.$el.width() / this.itemWidth) | 0;
+      return (app.$window.width() / this.itemWidth) | 0;
     },
     layout: function() {
-      var col, colSpan, freeUnits, gridUnit, height, i, key, newRow, placed, row, rowSpan, takenUnits, width, _i, _len, _ref;
+      var col, colSpan, freeUnits, gridUnit, height, i, key, newRow, placed, row, rowSpan, takenUnits, width;
       this.unitSpan = this.$el.innerWidth() / this.numCols;
       this.unit.css("position", "absolute");
       this.unit.find(".portfolio__item__block").css({
@@ -110,12 +111,11 @@ define(function(require, exports, module) {
         this.unit = this.shuffle(this.unit);
       }
       gridUnit = {};
-      _ref = this.unit;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        key = _ref[_i];
-        gridUnit = $(key);
-        rowSpan = parseInt(gridUnit.data("rowspan"), 10);
-        colSpan = parseInt(gridUnit.data("colspan"), 10);
+      key = 0;
+      while (key < this.unit.length) {
+        gridUnit = $(this.unit[key]);
+        rowSpan = parseInt(gridUnit.attr("data-rowspan"), 10);
+        colSpan = parseInt(gridUnit.attr("data-colspan"), 10);
         placed = false;
         newRow = [];
         width = this.unitSpan * colSpan;
@@ -124,10 +124,12 @@ define(function(require, exports, module) {
           width: width,
           height: height
         });
-        for (row in this.setArray) {
+        row = 0;
+        while (row <= this.setArray.length) {
           freeUnits = 0;
           takenUnits = 0;
-          for (col in this.setArray[row]) {
+          col = 0;
+          while (col <= this.setArray[row].length) {
             if (this.setArray[row][col] === 0) {
               freeUnits++;
             } else {
@@ -146,38 +148,44 @@ define(function(require, exports, module) {
               }
               if (rowSpan > 1) {
                 newRow = [];
-                i = this.numCols;
-                while (i--) {
+                i = 0;
+                while (i <= this.numCols - 1) {
                   newRow[i] = 0;
+                  i++;
                 }
                 this.setArray.push(newRow);
                 i = colSpan + (col - (colSpan - 1)) - 1;
                 while (i >= (col - (colSpan - 1))) {
-                  this.setArray[parseInt(row, 10) + 1][i] = 1;
+                  this.setArray[row + 1][i] = 1;
                   i--;
                 }
               }
               placed = true;
               break;
             }
+            col++;
           }
           if (!placed) {
-            if (this.setArray[row + 1] != null) {
+            if (!this.setArray[row + 1]) {
               newRow = [];
-              i = this.numCols;
-              while (i--) {
+              i = 0;
+              while (i <= this.numCols - 1) {
                 newRow[i] = 0;
+                i++;
               }
               this.setArray.push(newRow);
             }
           } else {
             break;
           }
+          row++;
         }
+        key++;
       }
       return this.$el.height(this.setArray.length * this.unitSpan);
     },
     resize: function() {
+      this.$el.width('auto').removeClass('portfolio__list--centered');
       return this.initGrid(true);
     }
   });
