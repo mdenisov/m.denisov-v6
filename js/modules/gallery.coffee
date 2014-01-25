@@ -45,8 +45,6 @@ define (require, exports, module) ->
       # Set up number of cols
       numCols = @setCols()
 
-      console.log numCols
-
       # Only relayout if cols has changed
       if @numCols isnt numCols or forceReload
 

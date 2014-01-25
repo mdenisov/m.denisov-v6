@@ -37,7 +37,6 @@ define(function(require, exports, module) {
     initGrid: function(forceReload) {
       var i, newRow, numCols;
       numCols = this.setCols();
-      console.log(numCols);
       if (this.numCols !== numCols || forceReload) {
         this.numCols = numCols;
         this.unit = $('.portfolio__item');
