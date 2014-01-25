@@ -32,7 +32,7 @@ define (require, exports, module) ->
   ) navigator.userAgent or navigator.vendor or window.opera
 
   app.init = ->
-    app.$document.on 'resize', (e) ->
+    app.$window.on 'resize', (e) ->
       PubSub.trigger('app:resize', e)
 
     app.$document.on 'mousemove', (e) ->

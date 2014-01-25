@@ -11,10 +11,10 @@ define(function(require, exports, module) {
     el: '.page',
     initialize: function() {
       this.$el = $(this.el);
-      return app.$body.addClass('page').addClass('fixed');
+      return app.$body.addClass('fixedpage').addClass('fixed');
     },
     destroy: function() {
-      return app.$body.removeClass('page').removeClass('fixed');
+      return app.$body.removeClass('fixedpage').removeClass('fixed');
     }
   });
 });

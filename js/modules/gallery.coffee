@@ -18,8 +18,14 @@ define (require, exports, module) ->
     popped: false
     setArray: null
     padding: 10
+    itemWidth: 320
 
     initialize: ->
+      @pubSub =
+        'app:resize': @resize
+
+      PubSub.attach(@pubSub, this);
+
       @$el = $(@el)
 
       app.$body.addClass('grid').addClass('gallery')
@@ -28,6 +34,12 @@ define (require, exports, module) ->
 
     destroy: ->
       app.$body.removeClass('grid').removeClass('gallery')
+
+      PubSub.unattach(@pubSub, @)
+      @stopListening()
+      @undelegateEvents();
+      @$el.removeData().unbind();
+      Backbone.View.prototype.remove.call(this);
 
     initGrid: (forceReload) ->
       # Set up number of cols
@@ -62,8 +74,31 @@ define (require, exports, module) ->
         else
           # Otherwise, kill the grid
           @clear()
+          @$el.width(@numCols * @itemWidth).addClass('portfolio__list--centered')
 
     clear: ->
+      @unit = $('.portfolio__item')
+
+      # Reset all CSS back to default as specified in CSS
+      @setArray = []
+      @unit.css({
+        position:"",
+        top: "",
+        left: "",
+        width: "",
+        height: ""
+      })
+
+      @unit.find(".portfolio__item__block").css({
+        position: "",
+        top: "",
+        left: "",
+        right: "",
+        bottom: "",
+        minHeight: ""
+      })
+
+      @initGrid()
 
     shuffle: (units) ->
       # Randomise the elements
@@ -87,8 +122,7 @@ define (require, exports, module) ->
       $(shuffled)
 
     setCols: ->
-      itemWidth = 320
-      (@$el.width() / itemWidth) | 0
+      (@$el.width() / @itemWidth) | 0
 
     layout: ->
       @unitSpan = @$el.innerWidth() / @numCols;
@@ -190,4 +224,7 @@ define (require, exports, module) ->
             break
 
       @$el.height(@setArray.length * @unitSpan);
+
+    resize: ->
+      @initGrid(true);
   })

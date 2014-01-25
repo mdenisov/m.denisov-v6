@@ -16,13 +16,23 @@ define(function(require, exports, module) {
     popped: false,
     setArray: null,
     padding: 10,
+    itemWidth: 320,
     initialize: function() {
+      this.pubSub = {
+        'app:resize': this.resize
+      };
+      PubSub.attach(this.pubSub, this);
       this.$el = $(this.el);
       app.$body.addClass('grid').addClass('gallery');
       return this.initGrid(true);
     },
     destroy: function() {
-      return app.$body.removeClass('grid').removeClass('gallery');
+      app.$body.removeClass('grid').removeClass('gallery');
+      PubSub.unattach(this.pubSub, this);
+      this.stopListening();
+      this.undelegateEvents();
+      this.$el.removeData().unbind();
+      return Backbone.View.prototype.remove.call(this);
     },
     initGrid: function(forceReload) {
       var i, newRow, numCols;
@@ -40,11 +50,31 @@ define(function(require, exports, module) {
         if (this.numCols >= 3) {
           return this.layout();
         } else {
-          return this.clear();
+          this.clear();
+          return this.$el.width(this.numCols * this.itemWidth).addClass('portfolio__list--centered');
         }
       }
     },
-    clear: function() {},
+    clear: function() {
+      this.unit = $('.portfolio__item');
+      this.setArray = [];
+      this.unit.css({
+        position: "",
+        top: "",
+        left: "",
+        width: "",
+        height: ""
+      });
+      this.unit.find(".portfolio__item__block").css({
+        position: "",
+        top: "",
+        left: "",
+        right: "",
+        bottom: "",
+        minHeight: ""
+      });
+      return this.initGrid();
+    },
     shuffle: function(units) {
       var i, j, nonShuffled, shuffled, temp;
       shuffled = units.not(".ignore-shuffle");
@@ -62,9 +92,7 @@ define(function(require, exports, module) {
       return $(shuffled);
     },
     setCols: function() {
-      var itemWidth;
-      itemWidth = 320;
-      return (this.$el.width() / itemWidth) | 0;
+      return (this.$el.width() / this.itemWidth) | 0;
     },
     layout: function() {
       var col, colSpan, freeUnits, gridUnit, height, i, key, newRow, placed, row, rowSpan, takenUnits, width, _i, _len, _ref;
@@ -148,6 +176,9 @@ define(function(require, exports, module) {
         }
       }
       return this.$el.height(this.setArray.length * this.unitSpan);
+    },
+    resize: function() {
+      return this.initGrid(true);
     }
   });
 });

@@ -178,6 +178,11 @@ body {
 }
 
 .portfolio {
+	&__list {
+		&--centered {
+			.center-block();
+		}
+	}
 	&__item {
 		overflow: hidden;
 		position: relative;
@@ -466,7 +471,7 @@ body {
 	}
 
 	&__preview {
-
+		width: 100%;
 	}
 
 	&__link {
@@ -568,7 +573,7 @@ body {
 }
 
 .page {
-//	.page-template-page-templatesfull-width-php & {
+	.fixedpage & {
 		height: 100%;
 
 		.entry-content {
@@ -578,7 +583,7 @@ body {
 			display: table;
 			position: relative;
 		}
-//	}
+	}
 }
 
 .alert {

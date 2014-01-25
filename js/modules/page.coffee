@@ -15,8 +15,8 @@ define (require, exports, module) ->
     initialize: ->
       @$el = $(@el)
 
-      app.$body.addClass('page').addClass('fixed')
+      app.$body.addClass('fixedpage').addClass('fixed')
 
     destroy: ->
-      app.$body.removeClass('page').removeClass('fixed')
+      app.$body.removeClass('fixedpage').removeClass('fixed')
   })

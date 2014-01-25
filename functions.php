@@ -438,9 +438,9 @@ function twentyfourteen_body_classes( $classes ) {
 		$classes[] = 'grid';
 	}
 
-//	if ( is_page_template( 'page-templates/gallery.php' ) ) {
-//		$classes[] = 'gallery';
-//	}
+	if ( is_page_template( 'page-templates/full-width.php' ) ) {
+		$classes[] = 'fixedpage';
+	}
 
 	if ( is_singular() && ! is_front_page() ) {
 		$classes[] = 'singular';

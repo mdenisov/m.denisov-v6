@@ -23,6 +23,7 @@ define(function(require, exports, module) {
     },
     $sidebar: {},
     $comments: {},
+    imgStretch: false,
     timer1: null,
     timer2: null,
     events: {
@@ -40,7 +41,8 @@ define(function(require, exports, module) {
       var func,
         _this = this;
       this.pubSub = {
-        'app:keydown': this.onKeyDown
+        'app:keydown': this.onKeyDown,
+        'app:resize': this.resize
       };
       PubSub.attach(this.pubSub, this);
       this.$el = $(this.el);
@@ -55,6 +57,7 @@ define(function(require, exports, module) {
       app.$body.addClass('fixed');
       this.doSlider();
       this.doNav();
+      this.resize();
       func = function() {
         _this.timer1 = null;
         app.$body.addClass('hidden');
@@ -119,6 +122,56 @@ define(function(require, exports, module) {
       this.slider.nav.$prev.children('.portfolio__nav__item__pos').html(prefP + prev);
       this.slider.nav.$curr.children('.portfolio__nav__item__pos').html(pref + this.slider.curr);
       return this.slider.nav.$next.children('.portfolio__nav__item__pos').html(prefN + next);
+    },
+    resize: function() {
+      var $img, $slide, $slides, imgH, imgLeft, imgRatio, imgTop, imgW, item, winH, winRatio, winW, _i, _len, _results;
+      $slides = this.slider.$slides;
+      winW = app.$window.width();
+      winH = app.$window.height() - 140;
+      winRatio = winW / winH;
+      if ($slides.length > 0) {
+        _results = [];
+        for (_i = 0, _len = $slides.length; _i < _len; _i++) {
+          item = $slides[_i];
+          $slide = $(item);
+          $img = $slide.children('img');
+          imgW = $img.width();
+          imgH = $img.height();
+          imgRatio = imgW / imgH;
+          imgLeft = 0;
+          imgTop = 0;
+          if (this.imgStretch === true) {
+            if (winRatio > imgRatio) {
+              imgW = parseInt(winW, 10);
+              imgH = parseInt(imgW / imgRatio, 10);
+            } else {
+              imgH = winH;
+              imgW = parseInt(imgH * imgRatio, 10);
+            }
+          } else {
+            if (winRatio > imgRatio) {
+              imgH = parseInt(winH, 10);
+              imgW = parseInt(imgH * imgRatio, 10);
+            } else {
+              imgW = winW;
+              imgH = parseInt(imgW / imgRatio, 10);
+            }
+          }
+          imgLeft = parseInt((winW - imgW) / 2, 10);
+          imgTop = parseInt((winH - imgH) / 2, 10);
+          $img.css({
+            width: imgW + 'px',
+            height: imgH + 'px'
+          });
+          _results.push($slide.css({
+            width: imgW + 'px',
+            height: imgH + 'px',
+            left: imgLeft + 'px',
+            top: imgTop + 'px'
+          }));
+        }
+        return _results;
+      }
     },
     onSidebarOver: function() {
       this.timer2 = null;

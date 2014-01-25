@@ -2103,6 +2103,11 @@ body.fixed {
   height: 100%;
   position: relative;
 }
+.portfolio__list--centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 .portfolio__item {
   overflow: hidden;
   position: relative;
@@ -2440,6 +2445,9 @@ body.fixed {
   background-color: #2e2e32;
   background-color: rgba(47, 47, 50, 0.95);
 }
+.portfolio__preview {
+  width: 100%;
+}
 .portfolio__link {
   color: #ffffff;
 }
@@ -2557,10 +2565,10 @@ body.fixed {
 .comment-respond .comment-reply-title {
   font-size: 14px;
 }
-.page {
+.fixedpage .page {
   height: 100%;
 }
-.page .entry-content {
+.fixedpage .page .entry-content {
   width: 100%;
   height: 100%;
   padding-left: 50%;

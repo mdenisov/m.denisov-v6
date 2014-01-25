@@ -23,6 +23,7 @@ define (require, exports, module) ->
         $next: {}
     $sidebar: {}
     $comments: {}
+    imgStretch: false
     timer1: null
     timer2: null
 
@@ -42,6 +43,7 @@ define (require, exports, module) ->
     initialize: ->
       @pubSub =
         'app:keydown': @onKeyDown
+        'app:resize': @resize
 
       PubSub.attach(@pubSub, this);
 
@@ -61,6 +63,7 @@ define (require, exports, module) ->
 
       @doSlider()
       @doNav()
+      @resize()
 
       func = () =>
         @timer1 = null
@@ -75,10 +78,9 @@ define (require, exports, module) ->
       @timer2 = null
       app.$body.removeClass('hidden').removeClass('fixed')
       PubSub.unattach(@pubSub, @)
-      @.stopListening()
-
-      @.undelegateEvents();
-      @.$el.removeData().unbind();
+      @stopListening()
+      @undelegateEvents();
+      @$el.removeData().unbind();
       Backbone.View.prototype.remove.call(this);
 
     doSlider: ->
@@ -89,9 +91,9 @@ define (require, exports, module) ->
 
     updateSlider: ->
       @slider.$slides
-      .removeClass('portfolio__slider__item--curr')
-      .eq(@slider.curr - 1)
-      .addClass('portfolio__slider__item--curr')
+        .removeClass('portfolio__slider__item--curr')
+        .eq(@slider.curr - 1)
+        .addClass('portfolio__slider__item--curr')
 
     doNav: ->
       @slider.nav.$prev = @slider.nav.$el.find('.portfolio__nav__item--prev')
@@ -132,6 +134,45 @@ define (require, exports, module) ->
       @slider.nav.$prev.children('.portfolio__nav__item__pos').html(prefP + prev)
       @slider.nav.$curr.children('.portfolio__nav__item__pos').html(pref + @slider.curr)
       @slider.nav.$next.children('.portfolio__nav__item__pos').html(prefN + next)
+
+    resize: ->
+      $slides = @slider.$slides
+      winW = app.$window.width()
+      winH = app.$window.height() - 140
+      winRatio = winW / winH
+
+      if $slides.length > 0
+        for item in $slides
+          $slide = $(item)
+          $img = $slide.children('img');
+
+          imgW = $img.width()
+          imgH = $img.height()
+          imgRatio = imgW / imgH
+          imgLeft = 0
+          imgTop = 0
+
+          if @imgStretch is true
+            if winRatio > imgRatio
+              imgW = parseInt(winW, 10)
+              imgH = parseInt(imgW / imgRatio, 10)
+            else
+              imgH = winH
+              imgW = parseInt(imgH * imgRatio, 10)
+          else
+            if winRatio > imgRatio
+              imgH = parseInt(winH, 10)
+              imgW = parseInt(imgH * imgRatio, 10)
+            else
+              imgW = winW
+              imgH = parseInt(imgW / imgRatio, 10)
+
+          imgLeft = parseInt((winW - imgW) / 2, 10)
+          imgTop = parseInt((winH - imgH) / 2, 10)
+
+          # Set Bg Image W, H
+          $img.css({width: imgW + 'px', height: imgH + 'px'});
+          $slide.css({width: imgW + 'px', height: imgH + 'px', left: imgLeft + 'px', top: imgTop + 'px'});
 
     onSidebarOver: ->
       @timer2 = null
