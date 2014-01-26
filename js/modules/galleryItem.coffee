@@ -52,6 +52,8 @@ define (require, exports, module) ->
 
       PubSub.attach(@pubSub, this);
 
+      @sedDefaults()
+
       @$el = $(@el)
       @slider.$el = @$el.find('.portfolio__slider')
       @$sidebar = @$el.find('.portfolio__sidebar')
@@ -88,6 +90,26 @@ define (require, exports, module) ->
       @undelegateEvents();
       @$el.removeData().unbind();
       Backbone.View.prototype.remove.call(this);
+
+    sedDefaults: ->
+      @slider =
+        curr: 1
+        count: 0
+        $el: {}
+        $slides: {}
+        nav:
+          $el: {}
+          $prev: {}
+          $curr: {}
+          $next: {}
+      @$sidebar = {}
+      @$comments = {}
+      @imgStretch = false
+      @timer1 = null
+      @timer2 = null
+
+      @startCoords = {}
+      @endCoords = {}
 
     doSlider: ->
       @slider.$slides = @slider.$el.find('.portfolio__slider__item')

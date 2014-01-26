@@ -31,9 +31,9 @@ get_header(); ?>
 		$newquery = array(
 			'post_type' => 'mtheme_portfolio',
 			'types' => $portfolio_cat_slug,
-			'orderby' => 'menu_order',
+//			'orderby' => 'menu_order',
 			'post_status' => 'publish',
-			'order' => 'ASC',
+			'order' => 'DESC',
 			'posts_per_page' => -1,
 		);
 

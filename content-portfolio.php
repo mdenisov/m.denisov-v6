@@ -79,6 +79,7 @@ if ( $type == 'image' ) {
 
 <article id="post-<?php the_ID(); ?>" class="portfolio__item portfolio__size--<?= $size ?>" <?php //post_class(); ?> data-rowspan="<?= $rowspan ?>" data-colspan="<?= $colspan ?>">
 	<div class="portfolio__item__block">
+		<?php if ($type === 'image'): ?>
 		<a class="portfolio__link" href="<?=get_permalink(get_the_ID())?>">
 			<img class="portfolio__preview" src="<?=$resized_imageURI?>" alt="<?=get_the_title()?>">
 		</a>
@@ -89,5 +90,10 @@ if ( $type == 'image' ) {
 				</h1>
 			</header>
 		</div>
+		<?php else: ?>
+			<div class="portfolio__text">
+				<?=get_the_content()?>
+			</div>
+		<?php endif; ?>
 	</div>
 </article>

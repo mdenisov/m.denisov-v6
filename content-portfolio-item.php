@@ -36,15 +36,11 @@ if ($images) {
 
 		$count++;
 
-//	$real_imageURI = wpmu_image_path ($imageURI);
-//	$resized_imageURI = $timthumb_path . '?src=' . $real_imageURI . '&w=50&h=50&q=72';
-
 		$data[] = array(
 			'id' => $id,
 			'title' => $imageTitle,
 			'description' => $imageDesc,
 			'url' => '',
-//		'thumb' => $resized_imageURI,
 			'source' => $imageURI,
 		);
 	}
@@ -58,7 +54,6 @@ if ($images) {
 		'title' => $imageTitle,
 		'description' => $imageDesc,
 		'url' => '',
-//		'thumb' => $resized_imageURI,
 		'source' => $imageURI,
 	);
 }

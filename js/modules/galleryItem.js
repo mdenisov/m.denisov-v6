@@ -50,6 +50,7 @@ define(function(require, exports, module) {
         'app:resize': this.resize
       };
       PubSub.attach(this.pubSub, this);
+      this.sedDefaults();
       this.$el = $(this.el);
       this.slider.$el = this.$el.find('.portfolio__slider');
       this.$sidebar = this.$el.find('.portfolio__sidebar');
@@ -80,6 +81,27 @@ define(function(require, exports, module) {
       this.undelegateEvents();
       this.$el.removeData().unbind();
       return Backbone.View.prototype.remove.call(this);
+    },
+    sedDefaults: function() {
+      this.slider = {
+        curr: 1,
+        count: 0,
+        $el: {},
+        $slides: {},
+        nav: {
+          $el: {},
+          $prev: {},
+          $curr: {},
+          $next: {}
+        }
+      };
+      this.$sidebar = {};
+      this.$comments = {};
+      this.imgStretch = false;
+      this.timer1 = null;
+      this.timer2 = null;
+      this.startCoords = {};
+      return this.endCoords = {};
     },
     doSlider: function() {
       this.slider.$slides = this.slider.$el.find('.portfolio__slider__item');
