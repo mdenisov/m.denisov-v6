@@ -85,14 +85,11 @@ add_action('wp_head', 'add_fb_open_graph_tags');
 			}
 		?>
 	</div>
-	<div class="portfolio__nav">
-		<ul class="portfolio__nav__list">
-			<li class="portfolio__nav__item portfolio__nav__item--prev portfolio__nav__item--hidden" data-direction="prev"><span class="portfolio__nav__item__pos">00</span> <i class="fa fa-angle-left"></i></li>
-			<li class="portfolio__nav__item portfolio__nav__item--curr"><span class="portfolio__nav__item__pos">01</span></li>
-			<li class="portfolio__nav__item portfolio__nav__item--next" data-direction="next"><i class="fa fa-angle-right"></i> <span class="portfolio__nav__item__pos">02</span></li>
-		</ul>
-	</div>
-	<span class="portfolio__info"></span>
+
+	<span class="portfolio__nav portfolio__nav--prev portfolio__nav--hidden" data-direction="prev" title="Prev photo"><i class="fa fa-angle-left"></i></span>
+	<span class="portfolio__nav portfolio__nav--next" data-direction="next" title="Next photo"><i class="fa fa-angle-right"></i></span>
+
+	<span class="portfolio__info" title="More info"><i class="portfolio__info__icon"></i></span>
 	<aside class="portfolio__sidebar portfolio__sidebar--shown">
 		<span class="portfolio__sidebar__close"></span>
 		<header class="portfolio__header">

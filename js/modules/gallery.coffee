@@ -64,8 +64,6 @@ define (require, exports, module) ->
 
         @setArray.push(newRow)
 
-        #      console.log @setArray, @setArray[0].length
-
         if @numCols >= 3
           # Layout the grid
           @layout()
@@ -125,7 +123,6 @@ define (require, exports, module) ->
     layout: ->
       @unitSpan = @$el.innerWidth() / @numCols;
       @unit.css("position", "absolute");
-      #    @container.css("position", "relative");
 
       @unit.find(".portfolio__item__block").css({
         position: "absolute",
@@ -162,8 +159,6 @@ define (require, exports, module) ->
         row = 0
 
         while row <= @setArray.length
-
-          #$.each(grid.setArray, function(rowNum, row){
           freeUnits = 0
           takenUnits = 0
 

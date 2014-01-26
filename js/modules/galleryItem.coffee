@@ -28,17 +28,18 @@ define (require, exports, module) ->
     timer2: null
 
     events:
-      'click .portfolio__nav__item': 'onSliderNavClick'
+      'click .portfolio__nav': 'onSliderNavClick'
       'click .portfolio__social__item': 'onSocialLinkClick'
       'click #submit': 'onCommentPost'
       'click .comment-reply-link': 'onCommentReplyClick'
       'click #cancel-comment-reply-link': 'onCommentReplyClick'
       'submit form.comment-form': 'onCommentPost'
-      'mousemove .portfolio__slider': 'onMouseMove'
+#      'mousemove .portfolio__slider': 'onMouseMove'
 #      'mousemove .portfolio__nav': 'onMouseMove'
-      'mouseenter .portfolio__sidebar': 'onSidebarOver'
-      'mouseleave .portfolio__sidebar': 'onSidebarLeave'
-#    'click .portfolio__sidebar__close': 'onSidebarLeave'
+#      'mouseenter .portfolio__sidebar': 'onSidebarOver'
+#      'mouseleave .portfolio__sidebar': 'onSidebarLeave'
+      'click .portfolio__info': 'showSidebar'
+      'click .portfolio__sidebar__close': 'hideSidebar'
 
     initialize: ->
       @pubSub =
@@ -53,6 +54,7 @@ define (require, exports, module) ->
       @slider.nav.$el = @$el.find('.portfolio__nav')
       @$comments = @$el.find('.portfolio__comments')
       @$info = @$el.find('.portfolio__info')
+      @$close = @$sidebar.find('.portfolio__sidebar__close')
 
       @$comments.find('form').prepend('<div class="portfolio__comment-status" ></div>')
       @commentStatus = @$comments.find('.portfolio__comment-status')
@@ -64,11 +66,12 @@ define (require, exports, module) ->
       @doSlider()
       @doNav()
       @resize()
+      @showSidebar()
 
       func = () =>
         @timer1 = null
         app.$body.addClass('hidden')
-        @$sidebar.removeClass('portfolio__sidebar--shown')
+        @hideSidebar()
       @timer1 = _.delay(func, 3000)
 
       return this
@@ -96,44 +99,21 @@ define (require, exports, module) ->
         .addClass('portfolio__slider__item--curr')
 
     doNav: ->
-      @slider.nav.$prev = @slider.nav.$el.find('.portfolio__nav__item--prev')
-      @slider.nav.$curr = @slider.nav.$el.find('.portfolio__nav__item--curr')
-      @slider.nav.$next = @slider.nav.$el.find('.portfolio__nav__item--next')
+      @slider.nav.$prev = @slider.nav.$el.filter('.portfolio__nav--prev')
+      @slider.nav.$next = @slider.nav.$el.filter('.portfolio__nav--next')
 
       @updateNav()
 
     updateNav: ->
-      prev = @slider.curr - 1
-      next = @slider.curr + 1
-
       if @slider.curr is 1
-        @slider.nav.$prev.addClass('portfolio__nav__item--hidden')
+        @slider.nav.$prev.addClass('portfolio__nav--hidden')
       else
-        @slider.nav.$prev.removeClass('portfolio__nav__item--hidden')
+        @slider.nav.$prev.removeClass('portfolio__nav--hidden')
 
       if @slider.curr is @slider.count
-        @slider.nav.$next.addClass('portfolio__nav__item--hidden')
+        @slider.nav.$next.addClass('portfolio__nav--hidden')
       else
-        @slider.nav.$next.removeClass('portfolio__nav__item--hidden')
-
-      if @slider.curr < 10
-        pref = '0'
-      else
-        pref = ''
-
-      if prev < 10
-        prefP = '0'
-      else
-        prefP = ''
-
-      if next < 10
-        prefN = '0'
-      else
-        prefN = ''
-
-      @slider.nav.$prev.children('.portfolio__nav__item__pos').html(prefP + prev)
-      @slider.nav.$curr.children('.portfolio__nav__item__pos').html(pref + @slider.curr)
-      @slider.nav.$next.children('.portfolio__nav__item__pos').html(prefN + next)
+        @slider.nav.$next.removeClass('portfolio__nav--hidden')
 
     resize: ->
       $slides = @slider.$slides
@@ -174,11 +154,14 @@ define (require, exports, module) ->
           $img.css({width: imgW + 'px', height: imgH + 'px'});
           $slide.css({width: imgW + 'px', height: imgH + 'px', left: imgLeft + 'px', top: imgTop + 'px'});
 
-    onSidebarOver: ->
-      @timer2 = null
+    showSidebar: ->
+      @$info.addClass('hide')
+      @$close.removeClass('hide')
       @$sidebar.addClass('portfolio__sidebar--shown')
 
-    onSidebarLeave: ->
+    hideSidebar: ->
+      @$info.removeClass('hide')
+      @$close.addClass('hide')
       @$sidebar.removeClass('portfolio__sidebar--shown')
 
     onKeyDown: (e) ->

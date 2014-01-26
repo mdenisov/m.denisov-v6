@@ -27,15 +27,14 @@ define(function(require, exports, module) {
     timer1: null,
     timer2: null,
     events: {
-      'click .portfolio__nav__item': 'onSliderNavClick',
+      'click .portfolio__nav': 'onSliderNavClick',
       'click .portfolio__social__item': 'onSocialLinkClick',
       'click #submit': 'onCommentPost',
       'click .comment-reply-link': 'onCommentReplyClick',
       'click #cancel-comment-reply-link': 'onCommentReplyClick',
       'submit form.comment-form': 'onCommentPost',
-      'mousemove .portfolio__slider': 'onMouseMove',
-      'mouseenter .portfolio__sidebar': 'onSidebarOver',
-      'mouseleave .portfolio__sidebar': 'onSidebarLeave'
+      'click .portfolio__info': 'showSidebar',
+      'click .portfolio__sidebar__close': 'hideSidebar'
     },
     initialize: function() {
       var func,
@@ -51,6 +50,7 @@ define(function(require, exports, module) {
       this.slider.nav.$el = this.$el.find('.portfolio__nav');
       this.$comments = this.$el.find('.portfolio__comments');
       this.$info = this.$el.find('.portfolio__info');
+      this.$close = this.$sidebar.find('.portfolio__sidebar__close');
       this.$comments.find('form').prepend('<div class="portfolio__comment-status" ></div>');
       this.commentStatus = this.$comments.find('.portfolio__comment-status');
       this.postId = this.$el.data('post-id');
@@ -58,10 +58,11 @@ define(function(require, exports, module) {
       this.doSlider();
       this.doNav();
       this.resize();
+      this.showSidebar();
       func = function() {
         _this.timer1 = null;
         app.$body.addClass('hidden');
-        return _this.$sidebar.removeClass('portfolio__sidebar--shown');
+        return _this.hideSidebar();
       };
       this.timer1 = _.delay(func, 3000);
       return this;
@@ -85,43 +86,21 @@ define(function(require, exports, module) {
       return this.slider.$slides.removeClass('portfolio__slider__item--curr').eq(this.slider.curr - 1).addClass('portfolio__slider__item--curr');
     },
     doNav: function() {
-      this.slider.nav.$prev = this.slider.nav.$el.find('.portfolio__nav__item--prev');
-      this.slider.nav.$curr = this.slider.nav.$el.find('.portfolio__nav__item--curr');
-      this.slider.nav.$next = this.slider.nav.$el.find('.portfolio__nav__item--next');
+      this.slider.nav.$prev = this.slider.nav.$el.filter('.portfolio__nav--prev');
+      this.slider.nav.$next = this.slider.nav.$el.filter('.portfolio__nav--next');
       return this.updateNav();
     },
     updateNav: function() {
-      var next, pref, prefN, prefP, prev;
-      prev = this.slider.curr - 1;
-      next = this.slider.curr + 1;
       if (this.slider.curr === 1) {
-        this.slider.nav.$prev.addClass('portfolio__nav__item--hidden');
+        this.slider.nav.$prev.addClass('portfolio__nav--hidden');
       } else {
-        this.slider.nav.$prev.removeClass('portfolio__nav__item--hidden');
+        this.slider.nav.$prev.removeClass('portfolio__nav--hidden');
       }
       if (this.slider.curr === this.slider.count) {
-        this.slider.nav.$next.addClass('portfolio__nav__item--hidden');
+        return this.slider.nav.$next.addClass('portfolio__nav--hidden');
       } else {
-        this.slider.nav.$next.removeClass('portfolio__nav__item--hidden');
+        return this.slider.nav.$next.removeClass('portfolio__nav--hidden');
       }
-      if (this.slider.curr < 10) {
-        pref = '0';
-      } else {
-        pref = '';
-      }
-      if (prev < 10) {
-        prefP = '0';
-      } else {
-        prefP = '';
-      }
-      if (next < 10) {
-        prefN = '0';
-      } else {
-        prefN = '';
-      }
-      this.slider.nav.$prev.children('.portfolio__nav__item__pos').html(prefP + prev);
-      this.slider.nav.$curr.children('.portfolio__nav__item__pos').html(pref + this.slider.curr);
-      return this.slider.nav.$next.children('.portfolio__nav__item__pos').html(prefN + next);
     },
     resize: function() {
       var $img, $slide, $slides, imgH, imgLeft, imgRatio, imgTop, imgW, item, winH, winRatio, winW, _i, _len, _results;
@@ -173,11 +152,14 @@ define(function(require, exports, module) {
         return _results;
       }
     },
-    onSidebarOver: function() {
-      this.timer2 = null;
+    showSidebar: function() {
+      this.$info.addClass('hide');
+      this.$close.removeClass('hide');
       return this.$sidebar.addClass('portfolio__sidebar--shown');
     },
-    onSidebarLeave: function() {
+    hideSidebar: function() {
+      this.$info.removeClass('hide');
+      this.$close.addClass('hide');
       return this.$sidebar.removeClass('portfolio__sidebar--shown');
     },
     onKeyDown: function(e) {
