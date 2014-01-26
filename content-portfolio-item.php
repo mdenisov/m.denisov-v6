@@ -17,7 +17,8 @@ $images =& get_children( array(
 		'post_mime_type' => 'image',
 		'order' => 'ASC',
 		'numberposts' => 100,
-		'orderby' => 'menu_order' )
+//		'orderby' => 'menu_order'
+	)
 );
 
 if ($images) {

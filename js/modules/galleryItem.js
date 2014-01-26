@@ -208,10 +208,12 @@ define(function(require, exports, module) {
       return this.endCoords = e.originalEvent.targetTouches[0];
     },
     onTouchEnd: function(e) {
-      if (Math.abs(this.startCoords.pageX - this.endCoords.pageX) > 0) {
-        return this.navNext();
-      } else {
+      var deltaX;
+      deltaX = this.startCoords.pageX - this.endCoords.pageX;
+      if (deltaX < 0) {
         return this.navPrev();
+      } else {
+        return this.navNext();
       }
     },
     onSliderNavClick: function(e) {

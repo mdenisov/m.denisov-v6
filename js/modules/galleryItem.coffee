@@ -215,10 +215,12 @@ define (require, exports, module) ->
       @endCoords = e.originalEvent.targetTouches[0];
 
     onTouchEnd: (e) ->
-      if Math.abs(@startCoords.pageX - @endCoords.pageX) > 0
-        @navNext()
-      else
+      deltaX = @startCoords.pageX - @endCoords.pageX
+
+      if deltaX < 0
         @navPrev()
+      else
+        @navNext()
 
     onSliderNavClick: (e) ->
       $target = $(e.currentTarget)
