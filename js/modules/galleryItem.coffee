@@ -34,12 +34,9 @@ define (require, exports, module) ->
       'click .comment-reply-link': 'onCommentReplyClick'
       'click #cancel-comment-reply-link': 'onCommentReplyClick'
       'submit form.comment-form': 'onCommentPost'
-#      'mousemove .portfolio__slider': 'onMouseMove'
-#      'mousemove .portfolio__nav': 'onMouseMove'
-#      'mouseenter .portfolio__sidebar': 'onSidebarOver'
-#      'mouseleave .portfolio__sidebar': 'onSidebarLeave'
       'click .portfolio__info': 'showSidebar'
       'click .portfolio__sidebar__close': 'hideSidebar'
+      'mousemove .portfolio__slider': 'onMouseMove'
 
     initialize: ->
       @pubSub =
@@ -176,14 +173,10 @@ define (require, exports, module) ->
         .removeClass('hidden')
         .addClass('mousemove')
 
-      @slider.nav.$el.stop().fadeIn()
-
       func = () =>
         app.$body
           .removeClass('mousemove')
           .addClass('hidden')
-
-        @slider.nav.$el.stop().fadeOut()
 
       @timer2 = _.delay(func, 3000)
 

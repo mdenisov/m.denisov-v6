@@ -9,6 +9,8 @@ get_header(); ?>
 	<?php
 		while ( have_posts() ) : the_post();
 
+			set_pageviews(get_the_ID());
+
 			get_template_part( 'content', 'portfolio-item' );
 
 		endwhile;

@@ -105,9 +105,10 @@ add_action('wp_head', 'add_fb_open_graph_tags');
 			<div class="portfolio__description">
 				<?php the_content(); ?>
 			</div>
-			<div class="portfolio__date">
-				<i class="fa fa-calendar-o"></i>&nbsp; <?php the_time('F j, Y'); ?>
-			</div>
+			<ul class="portfolio__meta">
+				<li class="portfolio__meta__item portfolio__meta__item--views"><i class="fa fa-calendar-o"></i>&nbsp; <?php the_time('F j, Y'); ?></li>
+				<li class="portfolio__meta__item portfolio__meta__item--date"><i class="fa fa-eye"></i>&nbsp; <?= get_the_pageview(get_the_ID())?></li>
+			</ul>
 		</header>
 		<div class="portfolio__social">
 			<iframe src="//www.facebook.com/plugins/like.php?href=<?= get_permalink(get_the_ID()) ?>&amp;width=280&amp;layout=standard&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=80&amp;appId=242541585808831&amp;colorscheme=dark" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:280px; height:26px;" allowTransparency="true"></iframe>

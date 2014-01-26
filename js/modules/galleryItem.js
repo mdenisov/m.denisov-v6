@@ -34,7 +34,8 @@ define(function(require, exports, module) {
       'click #cancel-comment-reply-link': 'onCommentReplyClick',
       'submit form.comment-form': 'onCommentPost',
       'click .portfolio__info': 'showSidebar',
-      'click .portfolio__sidebar__close': 'hideSidebar'
+      'click .portfolio__sidebar__close': 'hideSidebar',
+      'mousemove .portfolio__slider': 'onMouseMove'
     },
     initialize: function() {
       var func,
@@ -171,10 +172,8 @@ define(function(require, exports, module) {
         _this = this;
       this.timer2 = null;
       app.$body.removeClass('hidden').addClass('mousemove');
-      this.slider.nav.$el.stop().fadeIn();
       func = function() {
-        app.$body.removeClass('mousemove').addClass('hidden');
-        return _this.slider.nav.$el.stop().fadeOut();
+        return app.$body.removeClass('mousemove').addClass('hidden');
       };
       return this.timer2 = _.delay(func, 3000);
     },

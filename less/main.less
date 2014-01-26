@@ -390,8 +390,22 @@ body {
 		}
 	}
 
-	&__date {
-		line-height: 24px;
+	&__meta {
+		&:extend(.list-unstyled);
+
+		&__item {
+			line-height: 24px;
+			display: inline-block;
+			margin-right: 15px;
+
+			&--views {
+
+			}
+
+			&--date {
+
+			}
+		}
 	}
 
 	&__social {

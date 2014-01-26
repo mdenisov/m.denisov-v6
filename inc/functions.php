@@ -84,20 +84,20 @@ function print_comments($comment, $args, $depth) {
 }
 
 
-function set_pageviews($postId){
-	if(is_single()){
+function set_pageviews($postId) {
+	if(is_single()) {
 		global $post;
 		$pv = get_post_meta($postId, '_pageviews',true);
 		update_post_meta($postId, '_pageviews', $pv+1);
 	}
 }
 
-function the_pageview($postId){
+function the_pageview($postId) {
 	$pv = get_post_meta($postId, '_pageviews',true);
 	echo $pv ? $pv : 0;
 }
 
-function get_the_pageview($postId){
+function get_the_pageview($postId) {
 	$pv = get_post_meta($postId, '_pageviews',true);
 	return $pv ? $pv : 0;
 }

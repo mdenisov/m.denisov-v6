@@ -1799,7 +1799,8 @@ li {
 }
 .list-unstyled,
 .list-inline,
-.header__menu .nav-menu ul {
+.header__menu .nav-menu ul,
+.portfolio__meta {
   margin-left: 0;
   list-style: none;
 }
@@ -2379,8 +2380,10 @@ body.fixed {
 .portfolio__author__name:after {
   clear: both;
 }
-.portfolio__date {
+.portfolio__meta__item {
   line-height: 24px;
+  display: inline-block;
+  margin-right: 15px;
 }
 .portfolio__social {
   font-size: 24px;
