@@ -71,17 +71,17 @@ define (require, exports, module) ->
       @doNav()
       @showSidebar()
 
-      func = () =>
-        @timer1 = null
+      @timer1 = setTimeout(() =>
+        clearTimeout(@timer1)
         app.$body.addClass('hidden')
         @hideSidebar()
-      @timer1 = _.delay(func, 3000)
+      , 3000)
 
       return this
 
     destroy: ->
-      @timer1 = null
-      @timer2 = null
+      clearTimeout(@timer1)
+      clearTimeout(@timer2)
       app.$body.removeClass('hidden').removeClass('fixed')
       PubSub.unattach(@pubSub, @)
       @stopListening()
@@ -173,18 +173,18 @@ define (require, exports, module) ->
         when 39 then @navNext()
 
     onMouseMove: (e) ->
-      @timer2 = null
+      clearTimeout(@timer2)
 
       app.$body
         .removeClass('hidden')
         .addClass('mousemove')
 
-      func = () =>
+      @timer2 = setTimeout(() =>
+        clearTimeout(@timer2)
         app.$body
           .removeClass('mousemove')
           .addClass('hidden')
-
-      @timer2 = _.delay(func, 3000)
+      , 3000)
 
     onTouchStart: (e) ->
       @startCoords = @endCoords = e.originalEvent.targetTouches[0];

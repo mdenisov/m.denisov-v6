@@ -43,8 +43,7 @@ define(function(require, exports, module) {
       'touchend .portfolio__slider': 'onTouchEnd'
     },
     initialize: function() {
-      var func,
-        _this = this;
+      var _this = this;
       this.pubSub = {
         'app:preloaded': this.resize,
         'app:keydown': this.onKeyDown,
@@ -65,17 +64,16 @@ define(function(require, exports, module) {
       this.doSlider();
       this.doNav();
       this.showSidebar();
-      func = function() {
-        _this.timer1 = null;
+      this.timer1 = setTimeout(function() {
+        clearTimeout(_this.timer1);
         app.$body.addClass('hidden');
         return _this.hideSidebar();
-      };
-      this.timer1 = _.delay(func, 3000);
+      }, 3000);
       return this;
     },
     destroy: function() {
-      this.timer1 = null;
-      this.timer2 = null;
+      clearTimeout(this.timer1);
+      clearTimeout(this.timer2);
       app.$body.removeClass('hidden').removeClass('fixed');
       PubSub.unattach(this.pubSub, this);
       this.stopListening();
@@ -173,14 +171,13 @@ define(function(require, exports, module) {
       }
     },
     onMouseMove: function(e) {
-      var func,
-        _this = this;
-      this.timer2 = null;
+      var _this = this;
+      clearTimeout(this.timer2);
       app.$body.removeClass('hidden').addClass('mousemove');
-      func = function() {
+      return this.timer2 = setTimeout(function() {
+        clearTimeout(_this.timer2);
         return app.$body.removeClass('mousemove').addClass('hidden');
-      };
-      return this.timer2 = _.delay(func, 3000);
+      }, 3000);
     },
     onTouchStart: function(e) {
       return this.startCoords = this.endCoords = e.originalEvent.targetTouches[0];
