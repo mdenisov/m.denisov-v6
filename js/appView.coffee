@@ -28,7 +28,6 @@ define (require, exports, module) ->
       @$welcome = @$el.find('#welcome')
 
       PubSub.trigger('app:rendered')
-#      @onAfterRender()
 
     triggerRoute: (e) ->
       $targetLink = $(e.target).closest('a')

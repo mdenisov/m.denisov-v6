@@ -17,7 +17,7 @@ define(function(require, exports, module) {
       return PubSub.attach(this.pubSub, this);
     },
     onAfterRender: function() {
-      var $els, $item, error, imageCount, img, l, total, _results,
+      var $els, $item, imageCount, img, l, total, _results,
         _this = this;
       this.$progress.html('0');
       this.$el.show();
@@ -30,7 +30,6 @@ define(function(require, exports, module) {
         while (l--) {
           $item = $($els[l]);
           img = new Image();
-          error = false;
           img.src = $item.attr('src');
           img.onerror = function() {
             ++imageCount;

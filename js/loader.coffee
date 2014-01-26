@@ -33,7 +33,6 @@ define (require, exports, module) ->
         while l--
           $item = $($els[l])
           img = new Image()
-          error = false
 
           img.src = $item.attr('src');
           img.onerror = () =>
@@ -49,21 +48,6 @@ define (require, exports, module) ->
               @done()
       else
         @done()
-
-#      if l > 0
-#        while l--
-#          $($els[l]).load _.bind((e) ->
-#            ++imageCount
-#
-#            $(e.currentTarget).addClass "loaded"
-#
-#            @$progress.html(((imageCount / total) * 100) | 0)
-#
-#            if total is imageCount
-#              @done()
-#          , this)
-#      else
-#        @done()
 
     done: ->
       PubSub.trigger('app:preloaded')
