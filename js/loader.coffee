@@ -31,18 +31,39 @@ define (require, exports, module) ->
 
       if l > 0
         while l--
-          $($els[l]).load _.bind((e) ->
-            ++imageCount
+          $item = $($els[l])
+          img = new Image()
+          error = false
 
-            $(e.currentTarget).addClass "loaded"
+          img.src = $item.attr('src');
+          img.onerror = () =>
+            ++imageCount
+            console.log 'Error loading image: ' + img.src
+
+          $('<img/>').attr('src', img.src).load (res) =>
+            ++imageCount
 
             @$progress.html(((imageCount / total) * 100) | 0)
 
-            if total is imageCount
+            if imageCount is total
               @done()
-          , this)
       else
         @done()
+
+#      if l > 0
+#        while l--
+#          $($els[l]).load _.bind((e) ->
+#            ++imageCount
+#
+#            $(e.currentTarget).addClass "loaded"
+#
+#            @$progress.html(((imageCount / total) * 100) | 0)
+#
+#            if total is imageCount
+#              @done()
+#          , this)
+#      else
+#        @done()
 
     done: ->
       PubSub.trigger('app:preloaded')

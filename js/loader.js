@@ -17,7 +17,8 @@ define(function(require, exports, module) {
       return PubSub.attach(this.pubSub, this);
     },
     onAfterRender: function() {
-      var $els, imageCount, l, total, _results;
+      var $els, $item, error, imageCount, img, l, total, _results,
+        _this = this;
       this.$progress.html('0');
       this.$el.show();
       $els = app.$body.find('img');
@@ -27,14 +28,21 @@ define(function(require, exports, module) {
       if (l > 0) {
         _results = [];
         while (l--) {
-          _results.push($($els[l]).load(_.bind(function(e) {
+          $item = $($els[l]);
+          img = new Image();
+          error = false;
+          img.src = $item.attr('src');
+          img.onerror = function() {
             ++imageCount;
-            $(e.currentTarget).addClass("loaded");
-            this.$progress.html(((imageCount / total) * 100) | 0);
-            if (total === imageCount) {
-              return this.done();
+            return console.log('Error loading image: ' + img.src);
+          };
+          _results.push($('<img/>').attr('src', img.src).load(function(res) {
+            ++imageCount;
+            _this.$progress.html(((imageCount / total) * 100) | 0);
+            if (imageCount === total) {
+              return _this.done();
             }
-          }, this)));
+          }));
         }
         return _results;
       } else {
