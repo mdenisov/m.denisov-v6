@@ -1,0 +1,70 @@
+
+// UP TO LANDSCAPE PHONE
+@media (max-width: 480px) {
+	.header {
+		&__logo {
+			width: 40px;
+			background: url(@sprite-path) no-repeat -350px 0;
+		}
+	}
+	.portfolio {
+		&__size {
+			&--big {
+				.square(320px);
+			}
+		}
+	}
+	.page {
+		.fixedpage & {
+			height: auto;
+
+			.entry-content {
+				width: 100%;
+				height: 100%;
+				padding: 30px;
+				display: block;
+				position: relative;
+
+				&__image {
+					display: none;
+				}
+
+				&__content {
+					width: 100%;
+					display: block;
+				}
+			}
+
+			.entry-content {
+				width: 100%;
+				height: 100%;
+				padding: 30px;
+				display: block;
+				position: relative;
+			}
+		}
+	}
+	.contacts {
+		display: block;
+	}
+}
+
+// Responsive: Landscape phone to desktop/tablet
+@media (max-width: 767px) {
+	.header {
+		&__logo {
+			width: 40px;
+			background: url(@sprite-path) no-repeat -350px 0;
+		}
+	}
+	.contacts {
+		&__image {
+			display: none;
+		}
+	}
+}
+
+// Responsive: Tablet to desktop
+@media (min-width: 768px) and (max-width: 979px) {
+
+}

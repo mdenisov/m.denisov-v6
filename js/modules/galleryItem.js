@@ -40,6 +40,7 @@ define(function(require, exports, module) {
       var func,
         _this = this;
       this.pubSub = {
+        'app:preloaded': this.resize,
         'app:keydown': this.onKeyDown,
         'app:resize': this.resize
       };
@@ -57,7 +58,6 @@ define(function(require, exports, module) {
       app.$body.addClass('fixed');
       this.doSlider();
       this.doNav();
-      this.resize();
       this.showSidebar();
       func = function() {
         _this.timer1 = null;
@@ -138,10 +138,6 @@ define(function(require, exports, module) {
           }
           imgLeft = parseInt((winW - imgW) / 2, 10);
           imgTop = parseInt((winH - imgH) / 2, 10);
-          $img.css({
-            width: imgW + 'px',
-            height: imgH + 'px'
-          });
           _results.push($slide.css({
             width: imgW + 'px',
             height: imgH + 'px',

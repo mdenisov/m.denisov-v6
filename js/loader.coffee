@@ -31,16 +31,20 @@ define (require, exports, module) ->
 
       if l > 0
         while l--
-          $($els[l]).on 'load', ->
-          ++imageCount
+          $($els[l]).load _.bind((e) ->
+            ++imageCount
 
-          @$progress.html((total / imageCount) * 100)
+            $(e.currentTarget).addClass "loaded"
 
-          if total is imageCount
-            @done()
+            @$progress.html(((imageCount / total) * 100) | 0)
+
+            if total is imageCount
+              @done()
+          , this)
       else
         @done()
 
     done: ->
+      PubSub.trigger('app:preloaded')
       @$el.fadeOut()
   })

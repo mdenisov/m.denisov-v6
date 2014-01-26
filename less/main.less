@@ -63,12 +63,12 @@ a:focus {
 
 img {
 	// Responsive images (ensure images don't scale beyond their parents)
-	max-width: 100%; // Part 1: Set a maxium relative to the parent
-	width: auto\9; // IE8 need help adjusting responsive images
-	height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching
-
-	// Match vertical alignment with other comment elements
-	vertical-align: middle;
+//	max-width: 100%; // Part 1: Set a maxium relative to the parent
+//	width: auto\9; // IE8 need help adjusting responsive images
+//	height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching
+//
+//	// Match vertical alignment with other comment elements
+//	vertical-align: middle;
 }
 
 .clearfix {
@@ -286,7 +286,7 @@ body {
 		text-align: center;
 		position: absolute;
 		top: 50%;
-		margin-top: -35px;
+		margin-top: -70px;
 		.square(70px);
 		.opacity(50);
 		.transition(opacity .2s);
@@ -539,9 +539,20 @@ body {
 		.entry-content {
 			width: 100%;
 			height: 100%;
-			padding-left: 50%;
 			display: table;
 			position: relative;
+
+			&__image {
+				width: 50%;
+				display: table-cell;
+				vertical-align: bottom;
+			}
+
+			&__content {
+				width: 50%;
+				display: table-cell;
+				vertical-align: bottom;
+			}
 		}
 	}
 }
@@ -577,15 +588,11 @@ body {
 	padding-bottom: 80px;
 
 	&__image {
-		height: 100%;
-		width: 50%;
-		position: absolute;
-		left: 0px;
 		padding: 50px;
 
 		&__img {
-			height: 100%;
 			width: auto;
+			max-width: 100%;
 		}
 	}
 

@@ -22,7 +22,7 @@ define(function(require, exports, module) {
       this.$el = $(this.el);
       this.$container = this.$el.find('#main');
       this.$welcome = this.$el.find('#welcome');
-      return PubSub.trigger('app:rendered');
+      return this.onAfterRender();
     },
     triggerRoute: function(e) {
       var $targetLink, href, _ref, _ref1;

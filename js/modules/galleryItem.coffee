@@ -43,6 +43,7 @@ define (require, exports, module) ->
 
     initialize: ->
       @pubSub =
+        'app:preloaded': @resize
         'app:keydown': @onKeyDown
         'app:resize': @resize
 
@@ -65,7 +66,6 @@ define (require, exports, module) ->
 
       @doSlider()
       @doNav()
-      @resize()
       @showSidebar()
 
       func = () =>
@@ -151,7 +151,7 @@ define (require, exports, module) ->
           imgTop = parseInt((winH - imgH) / 2, 10)
 
           # Set Bg Image W, H
-          $img.css({width: imgW + 'px', height: imgH + 'px'});
+#          $img.css({width: imgW + 'px', height: imgH + 'px'});
           $slide.css({width: imgW + 'px', height: imgH + 'px', left: imgLeft + 'px', top: imgTop + 'px'});
 
     showSidebar: ->

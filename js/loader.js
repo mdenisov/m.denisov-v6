@@ -27,14 +27,14 @@ define(function(require, exports, module) {
       if (l > 0) {
         _results = [];
         while (l--) {
-          $($els[l]).on('load', function() {});
-          ++imageCount;
-          this.$progress.html((total / imageCount) * 100);
-          if (total === imageCount) {
-            _results.push(this.done());
-          } else {
-            _results.push(void 0);
-          }
+          _results.push($($els[l]).load(_.bind(function(e) {
+            ++imageCount;
+            $(e.currentTarget).addClass("loaded");
+            this.$progress.html(((imageCount / total) * 100) | 0);
+            if (total === imageCount) {
+              return this.done();
+            }
+          }, this)));
         }
         return _results;
       } else {
@@ -42,6 +42,7 @@ define(function(require, exports, module) {
       }
     },
     done: function() {
+      PubSub.trigger('app:preloaded');
       return this.$el.fadeOut();
     }
   });
