@@ -26,6 +26,8 @@ define(function(require, exports, module) {
     imgStretch: false,
     timer1: null,
     timer2: null,
+    startCoords: {},
+    endCoords: {},
     events: {
       'click .portfolio__nav': 'onSliderNavClick',
       'click .portfolio__social__item': 'onSocialLinkClick',
@@ -35,7 +37,10 @@ define(function(require, exports, module) {
       'submit form.comment-form': 'onCommentPost',
       'click .portfolio__info': 'showSidebar',
       'click .portfolio__sidebar__close': 'hideSidebar',
-      'mousemove .portfolio__slider': 'onMouseMove'
+      'mousemove .portfolio__slider': 'onMouseMove',
+      'touchstart .portfolio__slider': 'onTouchStart',
+      'touchmove .portfolio__slider': 'onTouchMove',
+      'touchend .portfolio__slider': 'onTouchEnd'
     },
     initialize: function() {
       var func,
@@ -176,6 +181,19 @@ define(function(require, exports, module) {
         return app.$body.removeClass('mousemove').addClass('hidden');
       };
       return this.timer2 = _.delay(func, 3000);
+    },
+    onTouchStart: function(e) {
+      return this.startCoords = this.endCoords = e.originalEvent.targetTouches[0];
+    },
+    onTouchMove: function(e) {
+      return this.endCoords = e.originalEvent.targetTouches[0];
+    },
+    onTouchEnd: function(e) {
+      if (Math.abs(this.startCoords.pageX - this.endCoords.pageX) > 0) {
+        return this.navNext();
+      } else {
+        return this.navPrev();
+      }
     },
     onSliderNavClick: function(e) {
       var $target, direction;

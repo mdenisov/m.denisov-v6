@@ -27,6 +27,9 @@ define (require, exports, module) ->
     timer1: null
     timer2: null
 
+    startCoords: {}
+    endCoords: {}
+
     events:
       'click .portfolio__nav': 'onSliderNavClick'
       'click .portfolio__social__item': 'onSocialLinkClick'
@@ -37,6 +40,9 @@ define (require, exports, module) ->
       'click .portfolio__info': 'showSidebar'
       'click .portfolio__sidebar__close': 'hideSidebar'
       'mousemove .portfolio__slider': 'onMouseMove'
+      'touchstart .portfolio__slider': 'onTouchStart'
+      'touchmove .portfolio__slider': 'onTouchMove'
+      'touchend .portfolio__slider': 'onTouchEnd'
 
     initialize: ->
       @pubSub =
@@ -179,6 +185,18 @@ define (require, exports, module) ->
           .addClass('hidden')
 
       @timer2 = _.delay(func, 3000)
+
+    onTouchStart: (e) ->
+      @startCoords = @endCoords = e.originalEvent.targetTouches[0];
+
+    onTouchMove: (e) ->
+      @endCoords = e.originalEvent.targetTouches[0];
+
+    onTouchEnd: (e) ->
+      if Math.abs(@startCoords.pageX - @endCoords.pageX) > 0
+        @navNext()
+      else
+        @navPrev()
 
     onSliderNavClick: (e) ->
       $target = $(e.currentTarget)
