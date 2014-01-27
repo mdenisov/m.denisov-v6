@@ -2134,6 +2134,9 @@ body.fixed {
   -o-filter: grayscale(90%);
   -ms-filter: grayscale(90%);
 }
+.portfolio__item__block--text {
+  background: #3c3c3c;
+}
 .portfolio__stub {
   width: 100%;
   height: 100%;
@@ -2172,7 +2175,6 @@ body.fixed {
   line-height: 34px;
   font-size: 26px;
   font-weight: 300;
-  background: #3c3c3c;
   width: 100%;
   height: 100%;
 }

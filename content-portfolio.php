@@ -78,7 +78,7 @@ if ( $type == 'image' ) {
 ?>
 
 <article id="post-<?php the_ID(); ?>" class="portfolio__item portfolio__size--<?= $size ?>" <?php //post_class(); ?> data-rowspan="<?= $rowspan ?>" data-colspan="<?= $colspan ?>">
-	<div class="portfolio__item__block">
+	<div class="portfolio__item__block <?= ($type === 'image') ? '' : 'portfolio__item__block--text' ?>">
 		<?php if ($type === 'image'): ?>
 		<a class="portfolio__link" href="<?=get_permalink(get_the_ID())?>">
 			<img class="portfolio__preview" src="<?=$resized_imageURI?>" alt="<?=get_the_title()?>">
