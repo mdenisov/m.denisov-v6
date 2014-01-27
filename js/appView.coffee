@@ -31,7 +31,8 @@ define (require, exports, module) ->
 
     triggerRoute: (e) ->
       $targetLink = $(e.target).closest('a')
-      href = $.trim($targetLink.attr('href'))
+      originHref = $.trim($targetLink.attr('href'))
+      href = originHref
 
       if (!Modernizr.history)
         if (app.getDefinedRoute(href) and window.chromeless)
@@ -49,6 +50,8 @@ define (require, exports, module) ->
 
             Backbone.history.navigate(href, {trigger: true});
             e.preventDefault();
+
+            _gaq.push ['_trackPageview', originHref]
 
     render: (html) ->
       if (html isnt null)

@@ -25,9 +25,10 @@ define(function(require, exports, module) {
       return PubSub.trigger('app:rendered');
     },
     triggerRoute: function(e) {
-      var $targetLink, href, _ref, _ref1;
+      var $targetLink, href, originHref, _ref, _ref1;
       $targetLink = $(e.target).closest('a');
-      href = $.trim($targetLink.attr('href'));
+      originHref = $.trim($targetLink.attr('href'));
+      href = originHref;
       if (!Modernizr.history) {
         if (app.getDefinedRoute(href) && window.chromeless) {
           href = $.trim($targetLink.attr('href'));
@@ -50,7 +51,8 @@ define(function(require, exports, module) {
             Backbone.history.navigate(href, {
               trigger: true
             });
-            return e.preventDefault();
+            e.preventDefault();
+            return _gaq.push(['_trackPageview', originHref]);
           }
         }
       }
