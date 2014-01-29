@@ -41,7 +41,7 @@ define (require, exports, module) ->
       PubSub.trigger('app:keydown', e)
 
     if app.MOBILE
-      app.$window.addClass('mobile')
+      app.$body.addClass('mobile')
 
   app.isValidUrl = (href) ->
     if (!href)

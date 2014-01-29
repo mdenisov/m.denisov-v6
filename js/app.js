@@ -33,7 +33,7 @@ define(function(require, exports, module) {
       return PubSub.trigger('app:keydown', e);
     });
     if (app.MOBILE) {
-      return app.$window.addClass('mobile');
+      return app.$body.addClass('mobile');
     }
   };
   app.isValidUrl = function(href) {
