@@ -43,9 +43,8 @@ define(function(require, exports, module) {
       'touchend .portfolio__slider': 'onTouchEnd'
     },
     initialize: function() {
-      var _this = this;
       this.pubSub = {
-        'app:preloaded': this.resize,
+        'app:preloaded': this.onAfterLoad,
         'app:keydown': this.onKeyDown,
         'app:resize': this.resize
       };
@@ -65,11 +64,6 @@ define(function(require, exports, module) {
       this.doSlider();
       this.doNav();
       this.showSidebar();
-      this.timer1 = setTimeout(function() {
-        clearTimeout(_this.timer1);
-        app.$body.addClass('hidden');
-        return _this.hideSidebar();
-      }, 3000);
       return this;
     },
     destroy: function() {
@@ -183,6 +177,15 @@ define(function(require, exports, module) {
       this.$info.removeClass('hide');
       this.$close.addClass('hide');
       return this.$sidebar.removeClass('portfolio__sidebar--shown');
+    },
+    onAfterLoad: function() {
+      var _this = this;
+      this.resize();
+      return this.timer1 = setTimeout(function() {
+        clearTimeout(_this.timer1);
+        app.$body.addClass('hidden');
+        return _this.hideSidebar();
+      }, 3000);
     },
     onKeyDown: function(e) {
       switch (e.keyCode) {
