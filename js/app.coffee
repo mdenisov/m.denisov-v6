@@ -43,6 +43,11 @@ define (require, exports, module) ->
     if app.MOBILE
       app.$body.addClass('mobile')
 
+      setTimeout(() ->
+        # Hide the address bar!
+        window.scrollTo(0, 1)
+      ,0)
+
   app.isValidUrl = (href) ->
     if (!href)
       return false
