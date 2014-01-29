@@ -2746,6 +2746,11 @@ body.fixed {
   .contacts {
     display: block;
   }
+  .welcome__logo {
+    width: 40px;
+    background: url("img/sprite.png") no-repeat -350px 0;
+    margin-left: -20px;
+  }
 }
 @media (max-width: 767px) {
   .header__logo {
