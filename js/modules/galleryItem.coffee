@@ -46,7 +46,7 @@ define (require, exports, module) ->
 
     initialize: ->
       @pubSub =
-        'app:preloaded': @onAfterLoad
+        'app:preloaded': @resize
         'app:keydown': @onKeyDown
         'app:resize': @resize
 
@@ -72,6 +72,12 @@ define (require, exports, module) ->
       @doSlider()
       @doNav()
       @showSidebar()
+
+      @timer1 = setTimeout(() =>
+        clearTimeout(@timer1)
+        app.$body.addClass('hidden')
+        @hideSidebar()
+      , 3000)
 
       return this
 
@@ -182,15 +188,6 @@ define (require, exports, module) ->
       @$info.removeClass('hide')
       @$close.addClass('hide')
       @$sidebar.removeClass('portfolio__sidebar--shown')
-
-    onAfterLoad: ->
-      @resize()
-
-      @timer1 = setTimeout(() =>
-        clearTimeout(@timer1)
-        app.$body.addClass('hidden')
-        @hideSidebar()
-      , 3000)
 
     onKeyDown: (e) ->
       switch e.keyCode
