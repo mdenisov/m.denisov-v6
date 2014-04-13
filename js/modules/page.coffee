@@ -54,6 +54,6 @@ define (require, exports, module) ->
         .css({width: imgW + 'px', left: imgLeft + 'px', top: imgTop + 'px'});
 
     resize: ->
-      if ($('.video').children()[0] != null)
+      if ($('video').children()[0] != null)
         @paneVideo()
   })

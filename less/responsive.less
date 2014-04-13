@@ -18,10 +18,14 @@
 		.fixedpage & {
 			height: auto;
 
+			.bg_video {
+				display: none;
+			}
+
 			.entry-content {
 				width: 100%;
 				height: 100%;
-				padding: 30px;
+				padding: 0px !important;
 				display: block;
 				position: relative;
 
@@ -32,6 +36,8 @@
 				&__content {
 					width: 100%;
 					display: block;
+					right: 0;
+					padding: 30px;
 				}
 			}
 
@@ -68,9 +74,6 @@
 		&__image {
 			display: none;
 		}
-	}
-	.video {
-		display: none;
 	}
 }
 

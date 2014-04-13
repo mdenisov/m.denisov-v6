@@ -52,7 +52,7 @@ define(function(require, exports, module) {
       });
     },
     resize: function() {
-      if ($('.video').children()[0] !== null) {
+      if ($('video').children()[0] !== null) {
         return this.paneVideo();
       }
     }
