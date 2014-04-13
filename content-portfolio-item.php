@@ -9,6 +9,9 @@
 $rootpath = get_stylesheet_directory_uri();
 $timthumb_path = $rootpath . '/timthumb.php';
 
+$width = 1920;
+$height = 1080;
+
 $post_id = $post->ID;
 $images =& get_children( array(
 		'post_parent' => $post_id,
@@ -31,9 +34,8 @@ if ($images) {
 		$imageDesc = apply_filters('the_title',$image->post_content);
 		$postlink = get_permalink($image->post_parent);
 
-		if ($featured_linked == 1 || $featured_linked == true) {
-			$attatchmentURL = get_attachment_link($image->ID);
-		}
+		$real_imageURI = $imageURI;
+		$resized_imageURI = $timthumb_path . '?src=' . $real_imageURI . '&w='. $width .'&h='. $height .'&q=72&zc=3';
 
 		$count++;
 
@@ -42,7 +44,7 @@ if ($images) {
 			'title' => $imageTitle,
 			'description' => $imageDesc,
 			'url' => '',
-			'source' => $imageURI,
+			'source' => $resized_imageURI,
 		);
 	}
 } else {

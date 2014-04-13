@@ -23,6 +23,7 @@
 		var baseUrl = "<?= site_url(); ?>",
 			ajaxurl = "<?= admin_url('admin-ajax.php'); ?>";
 	</script>
+	<script src="<?php echo get_template_directory_uri(); ?>/js/qbaka.js"></script>
 </head>
 
 <body <?php body_class(); ?>>

@@ -11,10 +11,50 @@ define(function(require, exports, module) {
     el: '.page',
     initialize: function() {
       this.$el = $(this.el);
-      return app.$body.addClass('fixedpage').addClass('fixed');
+      this.pubSub = {
+        'app:resize': this.resize
+      };
+      PubSub.attach(this.pubSub, this);
+      app.$body.addClass('fixedpage').addClass('fixed');
+      if ($('.video').children()[0] !== null) {
+        return this.paneVideo();
+      }
     },
     destroy: function() {
       return app.$body.removeClass('fixedpage').removeClass('fixed');
+    },
+    paneVideo: function() {
+      var $video, imgH, imgLeft, imgRatio, imgTop, imgW, winH, winRatio, winW;
+      $video = $('video');
+      winW = $(window).width();
+      winH = $(window).height();
+      imgW = $video.width();
+      imgH = $video.height();
+      imgRatio = imgW / imgH;
+      winRatio = winW / winH;
+      imgLeft = 0;
+      imgTop = 0;
+      if (winRatio > imgRatio) {
+        imgW = parseInt(winW, 10);
+        imgH = parseInt(imgW / imgRatio, 10);
+      } else {
+        imgH = winH;
+        imgW = parseInt(imgH * imgRatio, 10);
+      }
+      imgLeft = parseInt((winW - imgW) / 2, 10);
+      imgTop = parseInt((winH - imgH) / 2, 10);
+      return $video.attr({
+        width: imgW
+      }).css({
+        width: imgW + 'px',
+        left: imgLeft + 'px',
+        top: imgTop + 'px'
+      });
+    },
+    resize: function() {
+      if ($('.video').children()[0] !== null) {
+        return this.paneVideo();
+      }
     }
   });
 });
